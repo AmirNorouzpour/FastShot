@@ -1,10 +1,5 @@
 ﻿using Application.Interfaces;
 using Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ViewModels;
 
 namespace Application.Services
@@ -16,12 +11,14 @@ namespace Application.Services
         {
             _pocRepository = pocRepository;
         }
-        public PocViewModel GetPocList()
+        public IEnumerable<PocViewModel> GetPocList()
         {
-            return new PocViewModel()
+            return _pocRepository.GetPocList().Select(x => new PocViewModel
             {
-                PocList = _pocRepository.GetPocList()
-            };
+                Id = x.Id,
+                Username = x.Username
+            });
+
         }
     }
 }

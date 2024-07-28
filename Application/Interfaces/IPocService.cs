@@ -9,6 +9,6 @@ namespace Application.Interfaces
 {
     public interface IPocService
     {
-        PocViewModel GetPocList();
+        IEnumerable<PocViewModel> GetPocList();
     }
 }
