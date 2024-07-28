@@ -3,19 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastShot.Api", "FastShot.Api\FastShot.Api.csproj", "{DCF6A215-71ED-4303-9590-446297FF03F2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{BEBE14DE-FCF9-43C3-9E5A-D6EBC12DB617}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{630EF839-2DF0-4D6A-8897-4C8184BD214A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra.Data", "Infra.Data", "{E0394116-6050-4325-8326-275A033DB12D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra.IOC", "Infra.IOC", "{C8378FAC-5611-4E46-9BB4-21B4E8C6101F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{40C7EAAA-2638-4396-82FB-DE6D8E10ABF3}"
 EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DCF6A215-71ED-4303-9590-446297FF03F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DCF6A215-71ED-4303-9590-446297FF03F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DCF6A215-71ED-4303-9590-446297FF03F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DCF6A215-71ED-4303-9590-446297FF03F2}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
