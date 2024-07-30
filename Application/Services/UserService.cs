@@ -12,14 +12,16 @@ namespace Application.Services
 {
     public class UserService : IUserService
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ISecurityService _securityService;
+        private readonly IOtpService _otpService;
         private readonly AppSettings _appSettings;
 
-        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings, ISecurityService securityService)
+        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings, ISecurityService securityService, IOtpService otpService)
         {
             _userRepository = userRepository;
             _securityService = securityService;
+            _otpService = otpService;
             _appSettings = appSettings.Value;
         }
 
@@ -68,6 +70,66 @@ namespace Application.Services
             });
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task<ApiResult> AddRawUser(AddRawUser model)
+        {
+            var id = Guid.NewGuid();
+
+            if (model.SsoType == 0 && string.IsNullOrWhiteSpace(model.Mobile))
+                return new ApiResult { Msg = "شماره وارد شده صحیح نمی باشد" };
+
+            else if (model.SsoType == 0 && !string.IsNullOrWhiteSpace(model.Mobile))
+            {
+                var count = await _otpService.GetCount(model.Mobile);
+                if (count >= 3)
+                    return new ApiResult { Msg = "در هر 30 دقیقه فقط 3 بار می توانید درخواست کد بدهید" };
+
+                _otpService.SendSms(model.Mobile);
+
+                var dbUser = await _userRepository.GetUserByMobile(model.Mobile);
+                if (dbUser != null)
+                {
+                    return new ApiResult { Msg = "کد اعتبار سنجی با موفقیت ارسال شد", Data = dbUser.Id, Success = true };
+                }
+                else
+                {
+                    await _userRepository.AddRawUser(new User
+                    {
+                        DeviceName = model.DeviceName,
+                        DeviceUid = model.DeviceUid,
+                        Mobile = model.Mobile,
+                        IsActive = false,
+                        RegisterDateTime = DateTime.UtcNow,
+                        SsoType = model.SsoType,
+                        Id = id
+                    });
+                    return new ApiResult { Msg = "کد اعتبار سنجی با موفقیت ارسال شد", Data = dbUser.Id, Success = true };
+                }
+            }
+
+
+            if (model.SsoType == 1)
+            {
+                //_otpService.SendEmail(model.Email);
+                return new ApiResult { Msg = "نوع ورود پیاده سازی نشده است" };
+            }
+
+            if (model.SsoType == 2 && !string.IsNullOrWhiteSpace(model.Email))
+            {
+                await _userRepository.AddRawUser(new User
+                {
+                    DeviceName = model.DeviceName,
+                    DeviceUid = model.DeviceUid,
+                    Email = model.Email,
+                    IsActive = true,
+                    RegisterDateTime = DateTime.UtcNow,
+                    SsoType = model.SsoType,
+                    Id = id
+                });
+            }
+
+            return new ApiResult { Msg = "نوع ورود نامشخص است" };
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,17 @@ namespace Infra.Data.Repositories
         public async Task<User?> Authenticate(string? username, string? password)
         {
             return await _Connection.QueryFirstOrDefaultAsync<User?>("select id from users where username = @username and PasswordHash = @password", new { username, password });
+        }
+
+        public async Task<User> AddRawUser(User model)
+        {
+            var res = await _Connection.InsertAsync(model);
+            return model;
+        }
+
+        public async Task<User?> GetUserByMobile(string? mobile)
+        {
+            return await _Connection.QueryFirstOrDefaultAsync<User?>("select * from users where mobile = @mobile", new { mobile });
         }
     }
 }

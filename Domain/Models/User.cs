@@ -1,9 +1,12 @@
 ﻿
+using Dapper.Contrib.Extensions;
+
 namespace Domain.Models
 {
-
+    [Table("Users")]
     public class User
     {
+        [ExplicitKey]
         public Guid Id { get; set; }
         public string? UserName { get; set; }
         public string? Mobile { get; set; }
@@ -20,5 +23,8 @@ namespace Domain.Models
         public int FreeUsedCount { get; set; }
         public string? PasswordHash { get; set; }
         public int Role { get; set; }
+        public int SsoType { get; set; }
+        public bool EmailVerified { get; set; }
+        public bool MobileVerified { get; set; }
     }
 }

@@ -9,5 +9,6 @@ namespace Application.Interfaces
         Task<IEnumerable<User>> GetAll();
         Task<User?> GetById(int id);
         Task<User?> AddAndUpdateUser(User userObj);
+        Task<ApiResult> AddRawUser(AddRawUser model);
     }
 }

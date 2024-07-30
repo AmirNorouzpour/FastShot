@@ -13,9 +13,11 @@ namespace Infra.Ioc
             //Application Layer
             service.AddScoped<ISecurityService, SecurityService>();
             service.AddTransient<IUserService, UserService>();
+            service.AddTransient<IOtpService, OtpService>();
 
             //Infra.Data Layer
             service.AddScoped<IUserRepository, UserRepository>();
+            service.AddScoped<IOtpCodeRepository, OtpCodeRepository>();
         }
     }
 }

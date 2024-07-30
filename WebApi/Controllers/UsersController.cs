@@ -28,6 +28,13 @@ namespace WebApi.Controllers
             return new ApiResult<AuthenticateResponse> { Success = true, Data = response };
         }
 
+        [HttpPost("register")]
+        public async Task<ApiResult> Register(AddRawUser model)
+        {
+            var response = await _userService.AddRawUser(model);
+            return response;
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Post([FromBody] User userObj)
