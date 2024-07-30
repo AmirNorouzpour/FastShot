@@ -13,11 +13,13 @@ namespace Application.Services
     public class UserService : IUserService
     {
         private IUserRepository _userRepository;
+        private readonly ISecurityService _securityService;
         private readonly AppSettings _appSettings;
 
-        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings)
+        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings, ISecurityService securityService)
         {
             _userRepository = userRepository;
+            _securityService = securityService;
             _appSettings = appSettings.Value;
         }
 
@@ -28,14 +30,14 @@ namespace Application.Services
 
         public async Task<AuthenticateResponse?> Authenticate(AuthenticateRequest model)
         {
-
-            var user = await _userRepository.Authenticate(model?.Username, model?.Password);
+            var hashedPassword = _securityService.GetMd5(model?.Password);
+            var user = await _userRepository.Authenticate(model?.Username, hashedPassword);
 
             if (user == null) return null;
-            
+
             var token = await generateJwtToken(user);
 
-            return new AuthenticateResponse(user, token);
+            return new AuthenticateResponse { ExpireDate = DateTime.Now.AddDays(70), Token = token, UserId = user.Id };
         }
 
         public Task<IEnumerable<User>> GetAll()

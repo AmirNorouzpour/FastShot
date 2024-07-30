@@ -1,32 +1,33 @@
-using Application.Interfaces;
-using Application.Services;
-using Domain.Interfaces;
 using Domain.Models;
-using Infra.Data.Repositories;
 using Infra.Ioc;
 using WebApi.Helpers;
 
-var builder = WebApplication.CreateBuilder(args);
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+        // Add services to the container.
 
-builder.Services.AddControllers();
+        builder.Services.AddControllers();
 
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-DependencyContainer.RegisterServices(builder.Services);
+        builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+        DependencyContainer.RegisterServices(builder.Services);
 
 
-var app = builder.Build();
+        var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+        // Configure the HTTP request pipeline.
 
-app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
 
-app.UseAuthorization();
+        app.UseAuthorization();
 
-app.MapControllers();
+        app.MapControllers();
 
-app.UseMiddleware<JwtMiddleware>();
+        app.UseMiddleware<JwtMiddleware>();
 
-app.Run();
-
+        app.Run();
+    }
+}

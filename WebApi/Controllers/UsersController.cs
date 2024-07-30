@@ -8,24 +8,24 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
         }
 
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate(AuthenticateRequest model)
+        public async Task<ApiResult<AuthenticateResponse>> Authenticate(AuthenticateRequest model)
         {
             var response = await _userService.Authenticate(model);
 
             if (response == null)
-                return BadRequest(new { message = "نام کاربری و یا رمز عبور اشتباه است" });
+                return new ApiResult<AuthenticateResponse> { Success = false, Msg = "نام کاربری و یا رمز عبور اشتباه است" };
 
-            return Ok(response);
+            return new ApiResult<AuthenticateResponse> { Success = true, Data = response };
         }
 
         [HttpPost]
