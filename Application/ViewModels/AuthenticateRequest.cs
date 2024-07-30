@@ -1,13 +1,8 @@
-﻿using System.ComponentModel;
-
-namespace Application.ViewModels
+﻿namespace Application.ViewModels
 {
     public class AuthenticateRequest
     {
-        [DefaultValue("System")]
-        public required string Username { get; set; }
-
-        [DefaultValue("System")]
-        public required string Password { get; set; }
+        public string? Username { get; set; }
+        public string? Password { get; set; }
     }
 }

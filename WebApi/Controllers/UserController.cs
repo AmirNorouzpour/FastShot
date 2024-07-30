@@ -2,7 +2,6 @@
 using Application.ViewModels;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -24,21 +23,18 @@ namespace WebApi.Controllers
             var response = await _userService.Authenticate(model);
 
             if (response == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                return BadRequest(new { message = "نام کاربری و یا رمز عبور اشتباه است" });
 
             return Ok(response);
         }
 
-        // POST api/<CustomerController>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Post([FromBody] User userObj)
         {
-            userObj.Id = 0;
             return Ok(await _userService.AddAndUpdateUser(userObj));
         }
 
-        // PUT api/<CustomerController>/5
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> Put(int id, [FromBody] User userObj)

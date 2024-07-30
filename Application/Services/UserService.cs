@@ -29,12 +29,10 @@ namespace Application.Services
         public async Task<AuthenticateResponse?> Authenticate(AuthenticateRequest model)
         {
 
-            var user = await _userRepository.Authenticate(model.Username, model.Password);
+            var user = await _userRepository.Authenticate(model?.Username, model?.Password);
 
-            // return null if user not found
             if (user == null) return null;
-
-            // authentication successful so generate jwt token
+            
             var token = await generateJwtToken(user);
 
             return new AuthenticateResponse(user, token);

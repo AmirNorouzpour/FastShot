@@ -1,17 +1,24 @@
 ﻿
-using System.Text.Json.Serialization;
-
 namespace Domain.Models
 {
+
     public class User
     {
-        public int Id { get; set; }
-        public required string FirstName { get; set; }
-        public string LastName { get; set; }
-        public required string Username { get; set; }
-
-        [JsonIgnore]
-        public string Password { get; set; }
-        public bool isActive { get; set; }
+        public Guid Id { get; set; }
+        public string? UserName { get; set; }
+        public string? Mobile { get; set; }
+        public string? Email { get; set; }
+        public decimal Credit { get; set; }
+        public decimal RealCredit { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime RegisterDateTime { get; set; }
+        public DateTime? LastUpdateDateTime { get; set; }
+        public int WinCount { get; set; }
+        public int GameCount { get; set; }
+        public string DeviceName { get; set; }
+        public string DeviceUid { get; set; }
+        public int FreeUsedCount { get; set; }
+        public string? PasswordHash { get; set; }
+        public int Role { get; set; }
     }
 }
