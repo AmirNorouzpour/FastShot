@@ -8,12 +8,15 @@ namespace Infra.Ioc
 {
     public class DependencyContainer
     {
-        public static void RegisterServices(IServiceCollection service) {
+        public static void RegisterServices(IServiceCollection service)
+        {
             //Application Layer
             service.AddScoped<IPocService, PocServices>();
+            service.AddTransient<IUserService, UserService>();
 
             //Infra.Data Layer
             service.AddScoped<IPocRepository, PocRepository>();
+            service.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

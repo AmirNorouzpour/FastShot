@@ -1,6 +1,4 @@
 ﻿
-using Models;
-
 namespace ViewModels
 {
     public class PocViewModel
