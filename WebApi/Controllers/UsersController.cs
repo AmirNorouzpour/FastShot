@@ -29,9 +29,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ApiResult> Register(AddRawUser model)
+        public async Task<ApiResult> Register(RegisterUserModel model)
         {
-            var response = await _userService.AddRawUser(model);
+            var response = await _userService.RegisterUser(model);
             return response;
         }
 

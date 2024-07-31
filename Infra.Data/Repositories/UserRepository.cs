@@ -33,7 +33,7 @@ namespace Infra.Data.Repositories
             return await _Connection.QueryFirstOrDefaultAsync<User?>("select id from users where username = @username and PasswordHash = @password", new { username, password });
         }
 
-        public async Task<User> AddRawUser(User model)
+        public async Task<User> RegisterUser(User model)
         {
             var res = await _Connection.InsertAsync(model);
             return model;

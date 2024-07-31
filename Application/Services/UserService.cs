@@ -72,7 +72,7 @@ namespace Application.Services
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<ApiResult> AddRawUser(AddRawUser model)
+        public async Task<ApiResult> RegisterUser(RegisterUserModel model)
         {
             var id = Guid.NewGuid();
 
@@ -97,7 +97,7 @@ namespace Application.Services
                 }
                 else
                 {
-                    await _userRepository.AddRawUser(new User
+                    await _userRepository.RegisterUser(new User
                     {
                         DeviceName = model.DeviceName,
                         DeviceUid = model.DeviceUid,
@@ -120,7 +120,7 @@ namespace Application.Services
 
             if (model.SsoType == 2 && !string.IsNullOrWhiteSpace(model.Email))
             {
-                await _userRepository.AddRawUser(new User
+                await _userRepository.RegisterUser(new User
                 {
                     DeviceName = model.DeviceName,
                     DeviceUid = model.DeviceUid,
