@@ -10,5 +10,6 @@ namespace Domain.Interfaces
         Task<User> AddRawUser(User model);
         Task<User?> Authenticate(string? username, string? password);
         Task<User?> GetUserByMobile(string? mobile);
+        Task UpdateUser(User user);
     }
 }

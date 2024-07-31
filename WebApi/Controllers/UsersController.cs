@@ -35,6 +35,13 @@ namespace WebApi.Controllers
             return response;
         }
 
+        [HttpPost("verify")]
+        public async Task<ApiResult<Guid>> Verify(SsoVerifyModel model)
+        {
+            var response = await _userService.VerifyUser(model);
+            return response;
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Post([FromBody] User userObj)

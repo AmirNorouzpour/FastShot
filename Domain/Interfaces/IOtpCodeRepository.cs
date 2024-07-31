@@ -6,5 +6,7 @@ namespace Domain.Interfaces
     {
         Task<int> GetOtpsCount(string recptor);
         Task<OtpCode?> AddNewCode(OtpCode obj);
+        Task<OtpCode?> GetOtpByCode(string receptor, int ssoType);
+        Task UpdateOtpCode(OtpCode otpCode);
     }
 }

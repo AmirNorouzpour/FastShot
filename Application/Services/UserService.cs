@@ -85,7 +85,10 @@ namespace Application.Services
                 if (count >= 3)
                     return new ApiResult { Msg = "در هر 30 دقیقه فقط 3 بار می توانید درخواست کد بدهید" };
 
-                _otpService.SendSms(model.Mobile);
+                var sendRes = await _otpService.SendSms(model.Mobile);
+
+                if (!sendRes)
+                    return new ApiResult { Msg = "مشکلی در ارسال پیامک وجود دارد لطفا کمی بعد تلاش کنید" };
 
                 var dbUser = await _userRepository.GetUserByMobile(model.Mobile);
                 if (dbUser != null)
@@ -130,6 +133,28 @@ namespace Application.Services
             }
 
             return new ApiResult { Msg = "نوع ورود نامشخص است" };
+        }
+
+        public async Task<ApiResult<Guid>> VerifyUser(SsoVerifyModel model)
+        {
+            var otpValidateResult = await _otpService.CheckCode(model.Receptor, model.Code, model.SsoType);
+            if (otpValidateResult)
+            {
+                if (model.SsoType == 0)
+                {
+                    var user = await _userRepository.GetUserByMobile(model.Receptor);
+                    if (user == null)
+                        return new ApiResult<Guid> { Msg = "کاربری یافت نشد" };
+
+                    user.MobileVerified = true;
+                    user.IsActive = true;
+                    user.SsoType = model.SsoType;
+                    user.LastUpdateDateTime = DateTime.UtcNow;
+                    await _userRepository.UpdateUser(user);
+                    return new ApiResult<Guid> { Msg = "کاربر با موفقیت فعال شد", Success = true, Data = user.Id };
+                }
+            }
+            return new ApiResult<Guid> { Msg = "کد وارد شده صحیح نمی باشد" };
         }
     }
 }

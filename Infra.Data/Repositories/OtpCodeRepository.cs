@@ -18,11 +18,21 @@ namespace Infra.Data.Repositories
             return obj;
         }
 
+        public async Task<OtpCode?> GetOtpByCode(string receptor, int ssoType)
+        {
+            var res = await _Connection.QueryFirstAsync<OtpCode>("select top 1 * from otpcodes where receptor = @receptor and ssoType = @ssoType order by DateTime desc", new { receptor, ssoType });
+            return res;
+        }
+
         public async Task<int> GetOtpsCount(string receptor)
         {
             var count = await _Connection.ExecuteScalarAsync<int>("select count(*) from otpcodes where receptor = @receptor and [datetime] > @date", new { receptor, date = DateTime.UtcNow.AddMinutes(-30) });
             return count;
         }
 
+        public async Task UpdateOtpCode(OtpCode otpCode)
+        {
+            await _Connection.UpdateAsync(otpCode);
+        }
     }
 }

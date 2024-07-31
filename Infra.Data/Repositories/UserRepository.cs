@@ -3,6 +3,7 @@ using Dapper.Contrib.Extensions;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace Infra.Data.Repositories
 {
@@ -41,6 +42,11 @@ namespace Infra.Data.Repositories
         public async Task<User?> GetUserByMobile(string? mobile)
         {
             return await _Connection.QueryFirstOrDefaultAsync<User?>("select * from users where mobile = @mobile", new { mobile });
+        }
+
+        public async Task UpdateUser(User user)
+        {
+            await _Connection.UpdateAsync(user);
         }
     }
 }

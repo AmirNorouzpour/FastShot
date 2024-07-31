@@ -10,5 +10,6 @@ namespace Application.Interfaces
         Task<User?> GetById(int id);
         Task<User?> AddAndUpdateUser(User userObj);
         Task<ApiResult> AddRawUser(AddRawUser model);
+        Task<ApiResult<Guid>> VerifyUser(SsoVerifyModel model);
     }
 }

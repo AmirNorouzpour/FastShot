@@ -9,4 +9,12 @@
         public int SsoType { get; set; }
         public Guid Id { get; set; }
     }
+
+    public class SsoVerifyModel
+    {
+        public string Receptor { get; set; }
+        public string Code { get; set; }
+        public int SsoType { get; set; }
+
+    }
 }
