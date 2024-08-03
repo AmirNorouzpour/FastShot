@@ -1,4 +1,6 @@
-﻿namespace Application.ViewModels
+﻿using Domain.Models;
+
+namespace Application.ViewModels
 {
     public class RegisterUserModel
     {
@@ -16,5 +18,14 @@
         public string Code { get; set; }
         public int SsoType { get; set; }
 
+    }
+
+    public class UserInfoModel
+    {
+        public Guid UserId { get; set; }
+        public decimal Balance { get; set; }
+        public long LastNoteId { get; set; }
+        public string? UserName { get; set; }
+        public List<UserActiveRoomRun>? ActiveRoomRuns { get; set; }
     }
 }

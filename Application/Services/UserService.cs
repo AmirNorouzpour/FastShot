@@ -30,7 +30,7 @@ namespace Application.Services
             return _userRepository.AddAndUpdateUser(userObj);
         }
 
-        public async Task<AuthenticateResponse?> Authenticate(AuthenticateRequest model)
+        public async Task<AuthenticateResponse?> Authenticate(AuthenticateReq model)
         {
             var hashedPassword = _securityService.GetMd5(model?.Password);
             var user = await _userRepository.Authenticate(model?.Username, hashedPassword);
@@ -47,7 +47,7 @@ namespace Application.Services
             return _userRepository.GetAll();
         }
 
-        public Task<User?> GetById(int id)
+        public Task<User?> GetById(Guid id)
         {
             return _userRepository.GetById(id);
         }
@@ -155,6 +155,39 @@ namespace Application.Services
                 }
             }
             return new ApiResult<Guid> { Msg = "کد وارد شده صحیح نمی باشد" };
+        }
+
+        public async Task<ApiResult<UserInfoModel>> GetUserInfo(Guid userId)
+        {
+            var user = await _userRepository.GetById(userId);
+
+            if (user == null)
+                return new ApiResult<UserInfoModel> { Msg = "کاربری یافت نشد" };
+
+            var lastNoteId = await GetUserLastNoteId(userId);
+            var userActiveRoomRuns = await GetUserActiveRoomRuns(userId);
+
+            var res = new UserInfoModel
+            {
+                Balance = user.Credit,
+                UserId = userId,
+                UserName = user.UserName,
+                LastNoteId = lastNoteId,
+                ActiveRoomRuns = userActiveRoomRuns.ToList(),
+            };
+            return new ApiResult<UserInfoModel> { Success = true, Data = res };
+        }
+
+        public async Task<long> GetUserLastNoteId(Guid userId)
+        {
+            var res = await _userRepository.GetUserLastNoteId(userId);
+            return res;
+        }
+
+        public async Task<IEnumerable<UserActiveRoomRun>> GetUserActiveRoomRuns(Guid userId)
+        {
+            var res = await _userRepository.GetUserActiveRoomRuns(userId);
+            return res;
         }
     }
 }

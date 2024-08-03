@@ -1,7 +1,10 @@
-﻿using Domain.Models;
-
-namespace Application.ViewModels
+﻿namespace Application.ViewModels
 {
+    public class AuthenticateReq
+    {
+        public string? Username { get; set; }
+        public string? Password { get; set; }
+    }
     public class AuthenticateResponse
     {
         public Guid UserId { get; set; }

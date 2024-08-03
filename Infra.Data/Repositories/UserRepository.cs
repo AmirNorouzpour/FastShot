@@ -23,11 +23,6 @@ namespace Infra.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<User?> GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<User?> Authenticate(string? username, string? password)
         {
             return await _Connection.QueryFirstOrDefaultAsync<User?>("select id from users where username = @username and PasswordHash = @password", new { username, password });
@@ -48,5 +43,22 @@ namespace Infra.Data.Repositories
         {
             await _Connection.UpdateAsync(user);
         }
+
+        public async Task<User?> GetById(Guid id)
+        {
+            return await _Connection.QueryFirstOrDefaultAsync<User?>("select * from users where id = @id", new { id });
+        }
+
+        public async Task<long> GetUserLastNoteId(Guid userId)
+        {
+            var id = await _Connection.ExecuteScalarAsync<long>("select top 1 id from Msgs where userId = @userId order by datetime desc", new { userId });
+            return id;
+        }
+
+        public async Task<IEnumerable<UserActiveRoomRun>> GetUserActiveRoomRuns(Guid userId)
+        {
+            return await _Connection.QueryAsync<UserActiveRoomRun>("SELECT rr.Id ,rru.Team,rru.PlayerId ,rd.Title, rr.StartTime,rr.Status FROM RoomRuns rr\r\nLEFT OUTER JOIN RoomDefs rd  ON (rr.RoomDefId = rd.Id)\r\nLEFT OUTER JOIN RoomRunUsers rru ON (rr.Id = rru.RoomRunId)\r\nWHERE PlayerId = @userId and rr.Status = 0", new { userId });
+        }
+
     }
 }

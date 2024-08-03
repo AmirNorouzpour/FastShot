@@ -18,7 +18,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("authenticate")]
-        public async Task<ApiResult<AuthenticateResponse>> Authenticate(AuthenticateRequest model)
+        public async Task<ApiResult<AuthenticateResponse>> Authenticate(AuthenticateReq model)
         {
             var response = await _userService.Authenticate(model);
 
@@ -40,6 +40,13 @@ namespace WebApi.Controllers
         {
             var response = await _userService.VerifyUser(model);
             return response;
+        }
+
+        [HttpGet("getUserInfo")]
+        public async Task<ApiResult<UserInfoModel>> GetUserInfo(Guid userId)
+        {
+            var res = await _userService.GetUserInfo(userId);
+            return res;
         }
 
         [HttpPost]
