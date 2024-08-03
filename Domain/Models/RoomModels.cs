@@ -13,7 +13,7 @@ namespace Domain.Models
     }
 
     [Table("RoomDefs")]
-    public class RoomDefs
+    public class RoomDef
     {
         public long Id { get; set; }
         public string CategoryTitle { get; set; }
@@ -28,7 +28,7 @@ namespace Domain.Models
     }
 
     [Table("RoomRuns")]
-    public class RoomRuns
+    public class RoomRun
     {
         public long Id { get; set; }
         public long RoomDefId { get; set; }
@@ -40,7 +40,7 @@ namespace Domain.Models
     }
 
     [Table("RoomRunUsers")]
-    public class RoomRunUsers
+    public class RoomRunUser
     {
         public long Id { get; set; }
         public long RoomRunId { get; set; }
