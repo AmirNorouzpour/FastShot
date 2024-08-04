@@ -21,6 +21,7 @@ namespace Domain.Models
         public string Title { get; set; }
         public DateTime CreateDateTime { get; set; }
         public int Capacity { get; set; }
+        public int TeamsUsersCount { get; set; }
         public decimal EntryCost { get; set; }
         public string Desc { get; set; }
         public bool Active { get; set; }
@@ -47,6 +48,51 @@ namespace Domain.Models
         public Guid PlayerId { get; set; }
         public DateTime DateTime { get; set; }
         public string Team { get; set; }
+    }
+
+    [Table("RoomRunResults")]
+    public class RoomRunResult
+    {
+        public long Id { get; set; }
+        public long RoomRunId { get; set; }
+        public Guid UserId { get; set; }
+        public string UserName { get; set; }
+        public DateTime DateTime { get; set; }
+        public Guid CreatorId { get; set; }
+        public decimal Amount { get; set; }
+        public int Rank { get; set; }
+        public bool IsWinner { get; set; }
+    }
+
+    [Table("RoomRunWinnerTemplates")]
+    public class RoomRunWinnerTemplate
+    {
+        public long Id { get; set; }
+        public long RoomRunId { get; set; }
+        public Guid UserId { get; set; }
+        public DateTime DateTime { get; set; }
+        public string Amounts { get; set; } = "1:400;2:300;3:200";
+    }
+
+    public class RoomRunFlat
+    {
+        public long Id { get; set; }
+        public DateTime StartTime { get; set; }
+        public int Status { get; set; }
+        public int Category { get; set; }
+        public string CategoryTitle { get; set; }
+        public int Capacity { get; set; }
+        public decimal EntryCostWithOff { get; set; }
+        public decimal EntryCost { get; set; }
+        public int UsersCount { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+    }
+
+    public class RoomRunGropped
+    {
+        public string Key { get; set; }
+        public List<RoomRunFlat> Items { get; set; }
     }
 
 }

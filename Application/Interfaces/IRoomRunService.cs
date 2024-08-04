@@ -5,6 +5,7 @@ namespace Application.Interfaces
 {
     public interface IRoomRunService
     {
-        Task<List<RoomRun>> GetRooms(Guid userId);
+        Task<List<RoomRunGropped>> GetRooms(Guid userId);
+        Task<IEnumerable<RoomRunResult>> LastWinners();
     }
 }

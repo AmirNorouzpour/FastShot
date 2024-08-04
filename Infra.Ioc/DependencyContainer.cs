@@ -18,6 +18,7 @@ namespace Infra.Ioc
 
             //Infra.Data Layer
             service.AddScoped<IUserRepository, UserRepository>();
+            service.AddScoped<IRoomRepository, RoomRepository>();
             service.AddScoped<IOtpCodeRepository, OtpCodeRepository>();
         }
     }

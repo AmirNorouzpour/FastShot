@@ -9,22 +9,25 @@ namespace WebApi.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private IRoomRunService _service;
+        private IRoomRunService _roomRunsService;
 
-        public RoomsController(IRoomRunService service)
+        public RoomsController(IRoomRunService roomRunService)
         {
-            _service = service;
+            _roomRunsService = roomRunService;
         }
 
         [HttpGet]
-        public async Task<ApiResult<List<RoomRun>>> Get(Guid userId)
+        public async Task<ApiResult<List<RoomRunGropped>>> Get(Guid userId)
         {
-            var response = await _service.GetRooms(userId);
+            var response = await _roomRunsService.GetRooms(userId);
+            return new ApiResult<List<RoomRunGropped>> { Success = true, Data = response };
+        }
 
-            if (response == null)
-                return new ApiResult<List<RoomRun>> { Success = false, Msg = "رقابتی وجود ندارد!" };
-
-            return new ApiResult<List<RoomRun>> { Success = true, Data = response };
+        [HttpGet("[action]/{userId}")]
+        public async Task<ApiResult<IEnumerable<RoomRunResult>>> GetLastWinners(Guid userId)
+        {
+            var response = await _roomRunsService.LastWinners();
+            return new ApiResult<IEnumerable<RoomRunResult>> { Success = true, Data = response };
         }
     }
 }
