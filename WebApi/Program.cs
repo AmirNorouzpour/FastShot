@@ -1,5 +1,6 @@
 using Domain.Models;
 using Infra.Ioc;
+using System.Text.Json.Serialization;
 using WebApi.Helpers;
 
 internal class Program
@@ -10,7 +11,7 @@ internal class Program
 
         // Add services to the container.
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull);
 
         builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
         DependencyContainer.RegisterServices(builder.Services);

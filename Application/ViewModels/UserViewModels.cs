@@ -27,5 +27,7 @@ namespace Application.ViewModels
         public long LastNoteId { get; set; }
         public string? UserName { get; set; }
         public List<UserActiveRoomRun>? ActiveRoomRuns { get; set; }
+        public object WinsCount { get; set; }
+        public object PlaysCount { get; set; }
     }
 }

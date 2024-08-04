@@ -14,5 +14,6 @@ namespace Application.Interfaces
         Task<ApiResult<UserInfoModel>> GetUserInfo(Guid userId);
         Task<long> GetUserLastNoteId(Guid userId);
         Task<IEnumerable<UserActiveRoomRun>> GetUserActiveRoomRuns(Guid userId);
+        Task<LeadersBoardResult> GetLeadersBoard(Guid userId);
     }
 }

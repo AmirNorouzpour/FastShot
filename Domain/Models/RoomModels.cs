@@ -95,4 +95,13 @@ namespace Domain.Models
         public List<RoomRunFlat> Items { get; set; }
     }
 
+    public class LeadersBoardResult
+    {
+        public Guid UserId { get; set; }
+        public List<LeadersBoardResult> LeadersBoard { get; set; }
+        public string UserName { get; set; }
+        public int Count { get; set; }
+        public int Rank { get; set; }
+    }
+
 }

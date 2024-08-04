@@ -166,6 +166,7 @@ namespace Application.Services
 
             var lastNoteId = await GetUserLastNoteId(userId);
             var userActiveRoomRuns = await GetUserActiveRoomRuns(userId);
+            var wins = await _userRepository.GetUserWinsAndPlays(userId);
 
             var res = new UserInfoModel
             {
@@ -174,6 +175,8 @@ namespace Application.Services
                 UserName = user.UserName,
                 LastNoteId = lastNoteId,
                 ActiveRoomRuns = userActiveRoomRuns.ToList(),
+                WinsCount = wins[1],
+                PlaysCount = wins[0],
             };
             return new ApiResult<UserInfoModel> { Success = true, Data = res };
         }
@@ -187,6 +190,12 @@ namespace Application.Services
         public async Task<IEnumerable<UserActiveRoomRun>> GetUserActiveRoomRuns(Guid userId)
         {
             var res = await _userRepository.GetUserActiveRoomRuns(userId);
+            return res;
+        }
+
+        public async Task<LeadersBoardResult> GetLeadersBoard(Guid userId)
+        {
+            var res = await _userRepository.GetLeadersBoard(userId);
             return res;
         }
     }

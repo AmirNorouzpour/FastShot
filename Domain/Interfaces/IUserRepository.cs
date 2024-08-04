@@ -13,5 +13,7 @@ namespace Domain.Interfaces
         Task UpdateUser(User user);
         Task<long> GetUserLastNoteId(Guid userId);
         Task<IEnumerable<UserActiveRoomRun>> GetUserActiveRoomRuns(Guid userId);
+        Task<List<int>> GetUserWinsAndPlays(Guid userId);
+        Task<LeadersBoardResult> GetLeadersBoard(Guid userId);
     }
 }

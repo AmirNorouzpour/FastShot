@@ -1,7 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.ViewModels;
 using Domain.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -49,18 +48,12 @@ namespace WebApi.Controllers
             return res;
         }
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Post([FromBody] User userObj)
+        [HttpGet("getLeadersBoard")]
+        public async Task<ApiResult<LeadersBoardResult>> GetLeadersBoard(Guid userId)
         {
-            return Ok(await _userService.AddAndUpdateUser(userObj));
+            var res = await _userService.GetLeadersBoard(userId);
+            return new ApiResult<LeadersBoardResult> { Success = true, Data = res };
         }
 
-        [HttpPut("{id}")]
-        [Authorize]
-        public async Task<IActionResult> Put(int id, [FromBody] User userObj)
-        {
-            return Ok(await _userService.AddAndUpdateUser(userObj));
-        }
     }
 }
