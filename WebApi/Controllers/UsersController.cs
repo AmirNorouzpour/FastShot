@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("verify")]
-        public async Task<ApiResult<Guid>> Verify(SsoVerifyModel model)
+        public async Task<ApiResult<AuthenticateResponse>> Verify(SsoVerifyModel model)
         {
             var response = await _userService.VerifyUser(model);
             return response;

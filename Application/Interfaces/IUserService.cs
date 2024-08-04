@@ -10,7 +10,7 @@ namespace Application.Interfaces
         Task<User?> GetById(Guid id);
         Task<User?> AddAndUpdateUser(User userObj);
         Task<ApiResult> RegisterUser(RegisterUserModel model);
-        Task<ApiResult<Guid>> VerifyUser(SsoVerifyModel model);
+        Task<ApiResult<AuthenticateResponse>> VerifyUser(SsoVerifyModel model);
         Task<ApiResult<UserInfoModel>> GetUserInfo(Guid userId);
         Task<long> GetUserLastNoteId(Guid userId);
         Task<IEnumerable<UserActiveRoomRun>> GetUserActiveRoomRuns(Guid userId);

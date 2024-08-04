@@ -135,7 +135,7 @@ namespace Application.Services
             return new ApiResult { Msg = "نوع ورود نامشخص است" };
         }
 
-        public async Task<ApiResult<Guid>> VerifyUser(SsoVerifyModel model)
+        public async Task<ApiResult<AuthenticateResponse>> VerifyUser(SsoVerifyModel model)
         {
             var otpValidateResult = await _otpService.CheckCode(model.Receptor, model.Code, model.SsoType);
             if (otpValidateResult)
@@ -144,17 +144,28 @@ namespace Application.Services
                 {
                     var user = await _userRepository.GetUserByMobile(model.Receptor);
                     if (user == null)
-                        return new ApiResult<Guid> { Msg = "کاربری یافت نشد" };
+                        return new ApiResult<AuthenticateResponse> { Msg = "کاربری یافت نشد" };
 
                     user.MobileVerified = true;
                     user.IsActive = true;
                     user.SsoType = model.SsoType;
                     user.LastUpdateDateTime = DateTime.UtcNow;
                     await _userRepository.UpdateUser(user);
-                    return new ApiResult<Guid> { Msg = "کاربر با موفقیت فعال شد", Success = true, Data = user.Id };
+                    var token = await generateJwtToken(user);
+                    return new ApiResult<AuthenticateResponse>
+                    {
+                        Msg = "کاربر با موفقیت فعال شد",
+                        Success = true,
+                        Data = new AuthenticateResponse
+                        {
+                            ExpireDate = DateTime.UtcNow.AddDays(70),
+                            Token = token,
+                            UserId = user.Id
+                        }
+                    };
                 }
             }
-            return new ApiResult<Guid> { Msg = "کد وارد شده صحیح نمی باشد" };
+            return new ApiResult<AuthenticateResponse> { Msg = "کد وارد شده صحیح نمی باشد" };
         }
 
         public async Task<ApiResult<UserInfoModel>> GetUserInfo(Guid userId)
