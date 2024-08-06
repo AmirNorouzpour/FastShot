@@ -29,5 +29,19 @@ namespace WebApi.Controllers
             var response = await _roomRunsService.LastWinners();
             return new ApiResult<IEnumerable<RoomRunResult>> { Success = true, Data = response };
         }
+
+        [HttpPost("addUserRoom")]
+        public async Task<ApiResult<long>> AddUserRoom(RoomRunUser model)
+        {
+            var response = await _roomRunsService.AddUserToRoom(model, true);
+            return response;
+        }
+
+        [HttpPost("addTeamRoom")]
+        public async Task<ApiResult<string>> AddTeamRoom(TeamRegisterModel model)
+        {
+            var response = await _roomRunsService.AddTeamToRoom(model);
+            return response;
+        }
     }
 }

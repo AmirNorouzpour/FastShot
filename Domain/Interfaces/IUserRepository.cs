@@ -15,5 +15,6 @@ namespace Domain.Interfaces
         Task<IEnumerable<UserActiveRoomRun>> GetUserActiveRoomRuns(Guid userId);
         Task<List<int>> GetUserWinsAndPlays(Guid userId);
         Task<LeadersBoardResult> GetLeadersBoard(Guid userId);
+        Task<UserExtraFieldsModel> GetUserBalance(Guid userId, long roomRunId);
     }
 }

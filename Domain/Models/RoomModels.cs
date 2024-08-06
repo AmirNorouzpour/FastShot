@@ -5,7 +5,7 @@ namespace Domain.Models
     public class UserActiveRoomRun
     {
         public long Id { get; set; }
-        public Guid PlayerId { get; set; }
+        public Guid UserId { get; set; }
         public string Team { get; set; }
         public string Title { get; set; }
         public DateTime StartTime { get; set; }
@@ -45,7 +45,7 @@ namespace Domain.Models
     {
         public long Id { get; set; }
         public long RoomRunId { get; set; }
-        public Guid PlayerId { get; set; }
+        public Guid UserId { get; set; }
         public DateTime DateTime { get; set; }
         public string Team { get; set; }
     }

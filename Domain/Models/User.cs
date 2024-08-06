@@ -27,4 +27,12 @@ namespace Domain.Models
         public bool EmailVerified { get; set; }
         public bool MobileVerified { get; set; }
     }
+
+    public class UserExtraFieldsModel
+    {
+        public Guid UserId { get; set; }
+        public string? UserName { get; set; }
+        public decimal Credit { get; set; }
+        public decimal Cost { get; set; }
+    }
 }

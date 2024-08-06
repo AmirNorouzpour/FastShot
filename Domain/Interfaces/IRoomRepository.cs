@@ -6,5 +6,7 @@ namespace Domain.Interfaces
     {
         Task<IEnumerable<RoomRunFlat>> GetRoomRuns(int status);
         Task<IEnumerable<RoomRunResult>> LastWinners();
+        Task<long> AddUserToRoom(RoomRunUser roomRunUser);
+        Task<bool> CheckUserInRoom(Guid userId, long roomRunId);
     }
 }

@@ -209,5 +209,11 @@ namespace Application.Services
             var res = await _userRepository.GetLeadersBoard(userId);
             return res;
         }
+
+        public async Task<UserExtraFieldsModel> GetUserBalance(Guid userId, long roomRunId)
+        {
+            var res = await _userRepository.GetUserBalance(userId, roomRunId);
+            return res;
+        }
     }
 }

@@ -3,7 +3,6 @@ using Dapper.Contrib.Extensions;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace Infra.Data.Repositories
 {
@@ -64,7 +63,7 @@ namespace Infra.Data.Repositories
 
         public async Task<IEnumerable<UserActiveRoomRun>> GetUserActiveRoomRuns(Guid userId)
         {
-            return await _Connection.QueryAsync<UserActiveRoomRun>("SELECT rr.Id ,rru.Team,rru.PlayerId ,rd.Title, rr.StartTime,rr.Status FROM RoomRuns rr\r\nLEFT OUTER JOIN RoomDefs rd  ON (rr.RoomDefId = rd.Id)\r\nLEFT OUTER JOIN RoomRunUsers rru ON (rr.Id = rru.RoomRunId)\r\nWHERE PlayerId = @userId and rr.Status = 0", new { userId });
+            return await _Connection.QueryAsync<UserActiveRoomRun>("SELECT rr.Id ,rru.Team,rru.UserId ,rd.Title, rr.StartTime,rr.Status FROM RoomRuns rr LEFT OUTER JOIN RoomDefs rd  ON (rr.RoomDefId = rd.Id)  LEFT OUTER JOIN RoomRunUsers rru ON (rr.Id = rru.RoomRunId)  WHERE UserId = @userId and rr.Status = 0", new { userId });
         }
 
         public async Task<LeadersBoardResult> GetLeadersBoard(Guid userId)
@@ -99,6 +98,12 @@ namespace Infra.Data.Repositories
                 res.Count = 0;
             }
 
+            return res;
+        }
+
+        public async Task<UserExtraFieldsModel> GetUserBalance(Guid userId, long roomRunId)
+        {
+            var res = await _Connection.QueryFirstAsync<UserExtraFieldsModel>("SELECT Credit, (SELECT EntryCostWithOff FROM RoomRuns WHERE Id = @roomRunId) Cost from users where userId = @userId", new { userId, roomRunId });
             return res;
         }
 
