@@ -8,5 +8,6 @@ namespace Domain.Interfaces
         Task<IEnumerable<RoomRunResult>> LastWinners();
         Task<long> AddUserToRoom(RoomRunUser roomRunUser);
         Task<bool> CheckUserInRoom(Guid userId, long roomRunId);
+        Task<RoomRunFlat?> GetRoom(long roomId);
     }
 }

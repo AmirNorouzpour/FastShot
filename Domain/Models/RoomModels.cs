@@ -38,6 +38,8 @@ namespace Domain.Models
         public DateTime UpdateDateTime { get; set; }
         public Guid CreatorId { get; set; }
         public int Status { get; set; }
+        public decimal EntryCost { get; set; }
+        public decimal EntryCostWithOff { get; set; }
     }
 
     [Table("RoomRunUsers")]
@@ -87,6 +89,14 @@ namespace Domain.Models
         public int UsersCount { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
+        public List<UserTeamModel> Users { get; set; }
+        public int RemianCapacity { get; set; }
+    }
+
+    public class UserTeamModel
+    {
+        public Guid UserId { get; set; }
+        public string Team { get; set; }
     }
 
     public class RoomRunGropped

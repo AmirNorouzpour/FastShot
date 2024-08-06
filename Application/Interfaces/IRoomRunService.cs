@@ -10,5 +10,6 @@ namespace Application.Interfaces
         Task<IEnumerable<RoomRunResult>> LastWinners();
         Task<ApiResult<long>> AddUserToRoom(RoomRunUser roomRunUser, bool check);
         Task<ApiResult<string>> AddTeamToRoom(TeamRegisterModel model);
+        Task<RoomRunFlat?> GetRoom(long roomId);
     }
 }

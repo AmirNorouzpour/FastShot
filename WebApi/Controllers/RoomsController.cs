@@ -23,6 +23,13 @@ namespace WebApi.Controllers
             return new ApiResult<List<RoomRunGropped>> { Success = true, Data = response };
         }
 
+        [HttpGet("[action]/{roomId}")]
+        public async Task<ApiResult<RoomRunFlat>> GetRoom(long roomId)
+        {
+            var response = await _roomRunsService.GetRoom(roomId);
+            return new ApiResult<RoomRunFlat> { Success = true, Data = response };
+        }
+
         [HttpGet("[action]/{userId}")]
         public async Task<ApiResult<IEnumerable<RoomRunResult>>> GetLastWinners(Guid userId)
         {
@@ -42,6 +49,7 @@ namespace WebApi.Controllers
         {
             var response = await _roomRunsService.AddTeamToRoom(model);
             return response;
-        }
+        } 
+
     }
 }

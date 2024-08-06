@@ -2,6 +2,7 @@
 using Application.ViewModels;
 using Domain.Interfaces;
 using Domain.Models;
+using System.Reflection;
 
 namespace Application.Services
 {
@@ -70,6 +71,12 @@ namespace Application.Services
             }
 
             return new ApiResult<string> { Success = true, Data = model.Team };
+        }
+
+        public async Task<RoomRunFlat?> GetRoom(long roomId)
+        {
+            var room = await _repository.GetRoom(roomId);
+            return room;
         }
     }
 }

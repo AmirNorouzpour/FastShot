@@ -34,5 +34,9 @@ namespace Infra.Data.Repositories
             return count > 0;
         }
 
+        public async Task<RoomRunFlat?> GetRoom(long roomRunId)
+        {
+            return await _Connection.QueryFirstOrDefaultAsync<RoomRunFlat>("SELECT rr.Id, rr.Status, rr.StartTime, rr.EntryCost, rr.EntryCostWithOff, rd.Capacity, rd.TeamsUsersCount,rd.CategoryTitle,rd.[Desc],rd.Title FROM [RoomRuns] rr join RoomDefs rd on (rr.RoomDefId = rd.Id) where rr.Id = @roomRunId", new { roomRunId });
+        }
     }
 }
