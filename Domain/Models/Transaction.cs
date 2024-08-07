@@ -7,8 +7,8 @@ namespace Domain.Models
     {
         public long Id { get; set; }
         public decimal Amount { get; set; }
-        public int Side { get; set; }
-        public int Type { get; set; }
+        public FinanceSide Side { get; set; }
+        public FinanceType Type { get; set; }
         public string Desc { get; set; }
         public Guid CreatorId { get; set; }
         public Guid UserId { get; set; }

@@ -14,6 +14,21 @@ namespace Application.Services
             _repository = repository;
         }
 
+        public async Task AddFinanceRecord(decimal cost, FinanceSide side, FinanceType type, Guid userId, Guid creator, string desc)
+        {
+            await _repository.AddFinanceRecord(new Transaction
+            {
+                Amount = cost,
+                CreatorId = creator,
+                DateTime = DateTime.UtcNow,
+                Desc = desc,
+                IsDeleted = false,
+                Side = side,
+                Type = type,
+                UserId = userId
+            });
+        }
+
         public async Task<ApiResult<List<Transaction>>?> GetAll(int page)
         {
             var res = await _repository.GetAll(page);

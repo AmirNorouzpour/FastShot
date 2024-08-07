@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,11 @@ namespace Infra.Data.Repositories
         public int pageSize = 20;
         public TransactionRepository(IConfiguration configuration) : base(configuration)
         {
+        }
+
+        public async Task AddFinanceRecord(Transaction transaction)
+        {
+          await _Connection.InsertAsync(transaction);
         }
 
         public async Task<IEnumerable<Transaction>?> GetAll(int page)

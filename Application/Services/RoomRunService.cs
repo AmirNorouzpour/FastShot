@@ -10,11 +10,13 @@ namespace Application.Services
     {
         private IRoomRepository _repository;
         private readonly IUserService _userService;
+        private readonly ITransactionService _transactionService;
 
-        public RoomRunService(IRoomRepository repository, IUserService userService)
+        public RoomRunService(IRoomRepository repository, IUserService userService, ITransactionService transactionService)
         {
             _repository = repository;
             _userService = userService;
+            _transactionService = transactionService;
         }
         public async Task<List<RoomRunGropped>> GetRooms(Guid userId)
         {
@@ -31,18 +33,21 @@ namespace Application.Services
 
         public async Task<ApiResult<long>> AddUserToRoom(RoomRunUser roomRunUser, bool check = true)
         {
+            decimal cost = 0;
+            var userData = await _userService.GetUserBalance(roomRunUser.UserId, roomRunUser.RoomRunId);
+            cost = userData.Cost;
+
             if (check)
             {
                 var checkroom = await _repository.CheckUserInRoom(roomRunUser.UserId, roomRunUser.RoomRunId);
                 if (!checkroom)
                     return new ApiResult<long> { Msg = "شما قبلا در این رقابت ثبت نام کرده اید" };
 
-                var userData = await _userService.GetUserBalance(roomRunUser.UserId, roomRunUser.RoomRunId);
                 if (userData.Credit < userData.Cost)
                     return new ApiResult<long> { Msg = "موجودی کافی برای شرکت در رقابت ندارید" };
             }
 
-            //todo : add finance record
+            await _transactionService.AddFinanceRecord(cost, FinanceSide.Up, FinanceType.SherkatDarRoom, roomRunUser.UserId, roomRunUser.UserId, "desc");
 
             roomRunUser.DateTime = DateTime.UtcNow;
             var res = await _repository.AddUserToRoom(roomRunUser);
