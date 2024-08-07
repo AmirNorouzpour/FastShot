@@ -9,5 +9,6 @@ namespace Domain.Interfaces
         Task<long> AddUserToRoom(RoomRunUser roomRunUser);
         Task<bool> CheckUserInRoom(Guid userId, long roomRunId);
         Task<RoomRunFlat?> GetRoom(long roomId);
+        Task<IEnumerable<UserTeamModel>> GetRoomRunUsers(long roomRunId);
     }
 }

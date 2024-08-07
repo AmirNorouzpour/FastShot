@@ -76,6 +76,11 @@ namespace Application.Services
         public async Task<RoomRunFlat?> GetRoom(long roomId)
         {
             var room = await _repository.GetRoom(roomId);
+            if (room != null)
+            {
+                var users = await _repository.GetRoomRunUsers(roomId);
+                room.Users = users.ToList();
+            }
             return room;
         }
     }

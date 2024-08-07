@@ -36,7 +36,12 @@ namespace Infra.Data.Repositories
 
         public async Task<RoomRunFlat?> GetRoom(long roomRunId)
         {
-            return await _Connection.QueryFirstOrDefaultAsync<RoomRunFlat>("SELECT rr.Id, rr.Status, rr.StartTime, rr.EntryCost, rr.EntryCostWithOff, rd.Capacity, rd.TeamsUsersCount,rd.CategoryTitle,rd.[Desc],rd.Title FROM [RoomRuns] rr join RoomDefs rd on (rr.RoomDefId = rd.Id) where rr.Id = @roomRunId", new { roomRunId });
+            return await _Connection.QueryFirstOrDefaultAsync<RoomRunFlat>("SELECT rr.Id, rr.Status, rr.StartTime, rr.EntryCost, rr.EntryCostWithOff, rd.Capacity, rd.TeamsUsersCount,rd.CategoryTitle,rd.[Desc],rd.Title,  (SELECT COUNT(*) FROM RoomRunUsers rru WHERE rru.RoomRunId = rr.Id) UsersCount FROM [RoomRuns] rr join RoomDefs rd on (rr.RoomDefId = rd.Id) where rr.Id = @roomRunId", new { roomRunId });
+        }
+
+        public async Task<IEnumerable<UserTeamModel>> GetRoomRunUsers(long roomRunId)
+        {
+            return await _Connection.QueryAsync<UserTeamModel>("SELECT [UserId],[Team] FROM [RoomRunUsers] where RoomRunId = @roomRunId", new { roomRunId });
         }
     }
 }

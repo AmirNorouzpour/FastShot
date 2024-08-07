@@ -89,10 +89,10 @@ namespace Domain.Models
         public int UsersCount { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
-        public List<UserTeamModel> Users { get; set; }
-        public int RemianCapacity { get; set; }
+        public List<UserTeamModel> Users { get; set; } = new List<UserTeamModel>();
+        public int RemianCapacity { get { return Capacity - UsersCount; } }
     }
-
+     
     public class UserTeamModel
     {
         public Guid UserId { get; set; }
