@@ -15,7 +15,7 @@ namespace Infra.Data.Repositories
 
         public async Task AddFinanceRecord(Transaction transaction)
         {
-          await _Connection.InsertAsync(transaction);
+            await _Connection.InsertAsync(transaction);
         }
 
         public async Task<IEnumerable<Transaction>?> GetAll(int page)
