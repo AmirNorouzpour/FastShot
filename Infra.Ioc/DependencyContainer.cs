@@ -15,11 +15,14 @@ namespace Infra.Ioc
             service.AddTransient<IUserService, UserService>();
             service.AddTransient<IRoomRunService, RoomRunService>();
             service.AddTransient<IOtpService, OtpService>();
+            service.AddScoped<ITransactionService, TransactionService>();
+
 
             //Infra.Data Layer
             service.AddScoped<IUserRepository, UserRepository>();
             service.AddScoped<IRoomRepository, RoomRepository>();
             service.AddScoped<IOtpCodeRepository, OtpCodeRepository>();
+            service.AddScoped<ITransactionRepository, TransactionRepository>();
         }
     }
 }
