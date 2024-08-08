@@ -18,6 +18,7 @@ namespace Infra.Ioc
             service.AddTransient<IOtpService, OtpService>();
             service.AddScoped<ITransactionService, TransactionService>();
             service.AddScoped<IFriendService, FriendService>();
+            service.AddScoped<IMsgService, MsgService>();
 
             service.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -28,6 +29,7 @@ namespace Infra.Ioc
             service.AddScoped<IOtpCodeRepository, OtpCodeRepository>();
             service.AddScoped<ITransactionRepository, TransactionRepository>();
             service.AddScoped<IFriendRepository, FriendRepository>();
+            service.AddScoped<IMsgRepository, MsgRepository>();
         }
     }
 }

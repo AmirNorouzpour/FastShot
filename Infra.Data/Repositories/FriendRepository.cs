@@ -8,7 +8,6 @@ namespace Infra.Data.Repositories
 {
     public class FriendRepository : BaseRepository, IFriendRepository
     {
-        public int pageSize = 20;
         public FriendRepository(IConfiguration configuration) : base(configuration)
         {
         }

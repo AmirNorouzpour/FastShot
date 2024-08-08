@@ -12,7 +12,7 @@ namespace Domain.Models
         public string Icon { get; set; }
         public DateTime DateTime { get; set; }
         public Guid UserId { get; set; }
-        public int MsgType { get; set; }
+        public MsgType MsgType { get; set; }
     }
 }
 

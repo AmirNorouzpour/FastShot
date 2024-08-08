@@ -10,11 +10,13 @@ namespace WebApi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
+        private readonly IMsgService _msgService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IMsgService msgService)
         {
             _userService = userService;
+            _msgService = msgService;
         }
 
         [HttpPost("authenticate")]
@@ -75,6 +77,14 @@ namespace WebApi.Controllers
         {
             var response = await _userService.UpdateSheba(model.Sheba);
             return response;
+        }
+
+        [HttpGet("getuserMsgs")]
+        [Authorize(Type = AuthorizeType.Level2)]
+        public async Task<ApiResult<List<Msg>>> GetUserMsgs(int page)
+        {
+            var res = await _msgService.GetUserMsg(page);
+            return new ApiResult<List<Msg>> { Success = true, Data = res };
         }
 
     }

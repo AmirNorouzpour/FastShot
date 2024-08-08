@@ -8,7 +8,6 @@ namespace Infra.Data.Repositories
 {
     public class TicketRepository : BaseRepository, ITicketRepository
     {
-        public int pageSize = 20;
         public TicketRepository(IConfiguration configuration) : base(configuration)
         {
         }

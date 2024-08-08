@@ -34,4 +34,11 @@
         UserAwnserd = 2,
         Closed = 3
     }
+
+    public enum MsgType
+    {
+        Warning = 0,
+        Info = 1,
+        Critical = 2
+    }
 }
