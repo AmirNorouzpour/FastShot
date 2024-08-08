@@ -40,6 +40,11 @@ namespace Domain.Models
         public int Status { get; set; }
         public decimal EntryCost { get; set; }
         public decimal EntryCostWithOff { get; set; }
+        public long Roomer { get; set; }
+        public string RoomCode { get; set; }
+        public string Password { get; set; }
+        public string Link { get; set; }
+
     }
 
     [Table("RoomRunUsers")]
