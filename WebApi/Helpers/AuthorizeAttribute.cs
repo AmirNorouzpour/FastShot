@@ -14,7 +14,7 @@ namespace WebApi.Helpers
         public AuthorizeType Type { get; set; }
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var lvl1 = (string?)context.HttpContext.Items["fixed"];
+            var lvl1 = (string?)context.HttpContext.Request.Headers["fixed"];
             if (string.IsNullOrWhiteSpace(lvl1) || lvl1 != "ccwHm85PKMOGMcqDnXzmPgTbHNQT3E2Yn")
             {
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
