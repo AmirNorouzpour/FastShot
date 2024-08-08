@@ -26,4 +26,12 @@
         Level1 = 0,
         Level2 = 1
     }
+
+    public enum TicketStatus
+    {
+        Register = 0,
+        Awnsered = 1,
+        UserAwnserd = 2,
+        Closed = 3
+    }
 }
