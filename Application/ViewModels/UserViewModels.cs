@@ -38,4 +38,10 @@ namespace Application.ViewModels
         public string Team { get; set; }
     }
 
+    public class UserDataDto
+    {
+        public string? UserName { get; set; }
+        public string? Sheba { get; set; }
+    }
+
 }

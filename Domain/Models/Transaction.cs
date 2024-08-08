@@ -15,5 +15,6 @@ namespace Domain.Models
         public DateTime DateTime { get; set; }
         public DateTime UpdateTime { get; set; }
         public bool IsDeleted { get; set; }
+        public FinanceStatus Status { get; set; }
     }
 }

@@ -12,4 +12,12 @@
         Up = 0,
         Down = 1
     }
+
+    public enum FinanceStatus
+    {
+        Registered = 0,
+        Done = 1,
+        SentToBank = 2,
+        Canceled = 3,
+    }
 }

@@ -2,11 +2,13 @@
 using Application.ViewModels;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Helpers;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
@@ -53,6 +55,20 @@ namespace WebApi.Controllers
         {
             var res = await _userService.GetLeadersBoard(userId);
             return new ApiResult<LeadersBoardResult> { Success = true, Data = res };
+        }
+
+        [HttpPost("updateUsername")]
+        public async Task<ApiResult<string>> UpdateUsername(UserDataDto model)
+        {
+            var response = await _userService.UpdateUsername(model.UserName);
+            return response;
+        }
+
+        [HttpPost("updateSheba")]
+        public async Task<ApiResult<string>> UpdateSheba(UserDataDto model)
+        {
+            var response = await _userService.UpdateSheba(model.Sheba);
+            return response;
         }
 
     }

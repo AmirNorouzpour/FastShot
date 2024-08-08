@@ -2,7 +2,6 @@
 using Application.ViewModels;
 using Domain.Interfaces;
 using Domain.Models;
-using System.Reflection;
 
 namespace Application.Services
 {
@@ -47,7 +46,7 @@ namespace Application.Services
                     return new ApiResult<long> { Msg = "موجودی کافی برای شرکت در رقابت ندارید" };
             }
 
-            await _transactionService.AddFinanceRecord(cost, FinanceSide.Up, FinanceType.SherkatDarRoom, roomRunUser.UserId, roomRunUser.UserId, "desc");
+            await _transactionService.AddFinanceRecord(cost, FinanceSide.Up, FinanceType.SherkatDarRoom, roomRunUser.UserId, roomRunUser.UserId, FinanceStatus.Done, "desc");
 
             roomRunUser.DateTime = DateTime.UtcNow;
             var res = await _repository.AddUserToRoom(roomRunUser);

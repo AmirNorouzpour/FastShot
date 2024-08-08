@@ -4,9 +4,7 @@ namespace Domain.Interfaces
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetAll();
         Task<User?> GetById(Guid id);
-        Task<User?> AddAndUpdateUser(User userObj); 
         Task<User> RegisterUser(User model);
         Task<User?> Authenticate(string? username, string? password);
         Task<User?> GetUserByMobile(string? mobile);
@@ -16,5 +14,7 @@ namespace Domain.Interfaces
         Task<List<int>> GetUserWinsAndPlays(Guid userId);
         Task<LeadersBoardResult> GetLeadersBoard(Guid userId);
         Task<UserExtraFieldsModel> GetUserBalance(Guid userId, long roomRunId);
+        Task UpdateUsername(string username, Guid userId);
+        Task UpdateSheba(string sheba, Guid userId);
     }
 }

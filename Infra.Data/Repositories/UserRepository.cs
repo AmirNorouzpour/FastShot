@@ -12,16 +12,6 @@ namespace Infra.Data.Repositories
         {
         }
 
-        public Task<User?> AddAndUpdateUser(User userObj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<User>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<User?> Authenticate(string? username, string? password)
         {
             return await _Connection.QueryFirstOrDefaultAsync<User?>("select id from users where username = @username and PasswordHash = @password", new { username, password });
@@ -107,5 +97,14 @@ namespace Infra.Data.Repositories
             return res;
         }
 
+        public async Task UpdateUsername(string username, Guid userId)
+        {
+            await _Connection.ExecuteAsync("Update users set username = @username where userId = @userId", new { userId, username });
+        }
+
+        public async Task UpdateSheba(string sheba, Guid userId)
+        {
+            await _Connection.ExecuteAsync("Update users set sheba = @sheba where userId = @userId", new { userId, sheba });
+        }
     }
 }

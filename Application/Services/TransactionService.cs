@@ -14,7 +14,7 @@ namespace Application.Services
             _repository = repository;
         }
 
-        public async Task AddFinanceRecord(decimal cost, FinanceSide side, FinanceType type, Guid userId, Guid creator, string desc)
+        public async Task AddFinanceRecord(decimal cost, FinanceSide side, FinanceType type, Guid userId, Guid creator, FinanceStatus status, string desc)
         {
             await _repository.AddFinanceRecord(new Transaction
             {
@@ -25,7 +25,8 @@ namespace Application.Services
                 IsDeleted = false,
                 Side = side,
                 Type = type,
-                UserId = userId
+                UserId = userId,
+                Status = status
             });
         }
 

@@ -4,6 +4,7 @@ using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -25,11 +26,6 @@ namespace Application.Services
             _appSettings = appSettings.Value;
         }
 
-        public Task<User?> AddAndUpdateUser(User userObj)
-        {
-            return _userRepository.AddAndUpdateUser(userObj);
-        }
-
         public async Task<AuthenticateResponse?> Authenticate(AuthenticateReq model)
         {
             var hashedPassword = _securityService.GetMd5(model?.Password);
@@ -40,11 +36,6 @@ namespace Application.Services
             var token = await generateJwtToken(user);
 
             return new AuthenticateResponse { ExpireDate = DateTime.Now.AddDays(70), Token = token, UserId = user.Id };
-        }
-
-        public Task<IEnumerable<User>> GetAll()
-        {
-            return _userRepository.GetAll();
         }
 
         public Task<User?> GetById(Guid id)
@@ -137,14 +128,19 @@ namespace Application.Services
 
         public async Task<ApiResult<AuthenticateResponse>> VerifyUser(SsoVerifyModel model)
         {
-            var otpValidateResult = await _otpService.CheckCode(model.Receptor, model.Code, model.SsoType);
-            if (otpValidateResult)
+            var isdebug = Debugger.IsAttached;
+            var otpValidateResult = false;
+            if (!isdebug)
+                otpValidateResult = await _otpService.CheckCode(model.Receptor, model.Code, model.SsoType);
+
+            if (otpValidateResult || isdebug)
             {
                 if (model.SsoType == 0)
                 {
                     var user = await _userRepository.GetUserByMobile(model.Receptor);
                     if (user == null)
                         return new ApiResult<AuthenticateResponse> { Msg = "کاربری یافت نشد" };
+                    //todo : remove other user sessions
 
                     user.MobileVerified = true;
                     user.IsActive = true;
@@ -214,6 +210,28 @@ namespace Application.Services
         {
             var res = await _userRepository.GetUserBalance(userId, roomRunId);
             return res;
+        }
+
+        public async Task<ApiResult<string>> UpdateUsername(string? username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return new ApiResult<string> { Msg = "مقادیر ورودی نباید خالی باشد" };
+            }
+
+            await _userRepository.UpdateUsername(username, Guid.NewGuid());
+            return new ApiResult<string> { Success = true };
+        }
+
+        public async Task<ApiResult<string>> UpdateSheba(string? sheba)
+        {
+            if (string.IsNullOrWhiteSpace(sheba))
+            {
+                return new ApiResult<string> { Msg = "مقادیر ورودی نباید خالی باشد" };
+            }
+
+            await _userRepository.UpdateSheba(sheba, Guid.NewGuid());
+            return new ApiResult<string> { Success = true };
         }
     }
 }
