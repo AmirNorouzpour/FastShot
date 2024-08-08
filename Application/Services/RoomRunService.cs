@@ -17,7 +17,7 @@ namespace Application.Services
             _userService = userService;
             _transactionService = transactionService;
         }
-        public async Task<List<RoomRunGropped>> GetRooms(Guid userId)
+        public async Task<List<RoomRunGropped>> GetRooms()
         {
             var rooms = await _repository.GetRoomRuns(0);
             var gropedRooms = rooms.GroupBy(x => x.Category).Select(x => new RoomRunGropped { Key = x.FirstOrDefault().CategoryTitle, Items = x.ToList() }).ToList();

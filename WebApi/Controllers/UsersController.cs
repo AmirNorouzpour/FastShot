@@ -8,7 +8,6 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
@@ -19,6 +18,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("authenticate")]
+        [Authorize]
         public async Task<ApiResult<AuthenticateResponse>> Authenticate(AuthenticateReq model)
         {
             var response = await _userService.Authenticate(model);
@@ -30,6 +30,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("register")]
+        [Authorize]
         public async Task<ApiResult> Register(RegisterUserModel model)
         {
             var response = await _userService.RegisterUser(model);
@@ -37,6 +38,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("verify")]
+        [Authorize]
         public async Task<ApiResult<AuthenticateResponse>> Verify(SsoVerifyModel model)
         {
             var response = await _userService.VerifyUser(model);
@@ -44,6 +46,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("getUserInfo")]
+        [Authorize(Type = AuthorizeType.Level2)]
         public async Task<ApiResult<UserInfoModel>> GetUserInfo(Guid userId)
         {
             var res = await _userService.GetUserInfo(userId);
@@ -51,6 +54,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("getLeadersBoard")]
+        [Authorize(Type = AuthorizeType.Level2)]
         public async Task<ApiResult<LeadersBoardResult>> GetLeadersBoard(Guid userId)
         {
             var res = await _userService.GetLeadersBoard(userId);
@@ -58,6 +62,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("updateUsername")]
+        [Authorize(Type = AuthorizeType.Level2)]
         public async Task<ApiResult<string>> UpdateUsername(UserDataDto model)
         {
             var response = await _userService.UpdateUsername(model.UserName);
@@ -65,6 +70,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("updateSheba")]
+        [Authorize(Type = AuthorizeType.Level2)]
         public async Task<ApiResult<string>> UpdateSheba(UserDataDto model)
         {
             var response = await _userService.UpdateSheba(model.Sheba);

@@ -2,6 +2,7 @@
 using Application.ViewModels;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Helpers;
 
 namespace WebApi.Controllers
 {
@@ -17,9 +18,11 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ApiResult<List<Transaction>>> Get(Guid userId, int page)
+        [Authorize(Type = AuthorizeType.Level2)]
+        public async Task<ApiResult<List<Transaction>>> Get(int page)
         {
-            var response = await _service.GetAll(userId, page);
+            var userId = (Guid?)HttpContext.Items["userId"];
+            var response = await _service.GetAll(userId.GetValueOrDefault(), page);
             return response;
         }
     }

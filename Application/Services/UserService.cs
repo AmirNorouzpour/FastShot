@@ -2,6 +2,8 @@
 using Application.ViewModels;
 using Domain.Interfaces;
 using Domain.Models;
+using Infra.Data.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
@@ -16,13 +18,15 @@ namespace Application.Services
         private readonly IUserRepository _userRepository;
         private readonly ISecurityService _securityService;
         private readonly IOtpService _otpService;
+        private readonly IHttpContextAccessor _http;
         private readonly AppSettings _appSettings;
 
-        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings, ISecurityService securityService, IOtpService otpService)
+        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings, ISecurityService securityService, IOtpService otpService, IHttpContextAccessor http)
         {
             _userRepository = userRepository;
             _securityService = securityService;
             _otpService = otpService;
+            _http = http;
             _appSettings = appSettings.Value;
         }
 
@@ -50,12 +54,12 @@ namespace Application.Services
             var token = await Task.Run(() =>
             {
 
-                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var key = Encoding.UTF8.GetBytes(_appSettings.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
                     Expires = DateTime.UtcNow.AddDays(70),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 };
                 return tokenHandler.CreateToken(tokenDescriptor);
             });
@@ -219,7 +223,16 @@ namespace Application.Services
                 return new ApiResult<string> { Msg = "مقادیر ورودی نباید خالی باشد" };
             }
 
-            await _userRepository.UpdateUsername(username, Guid.NewGuid());
+            var userId = (Guid)_http.HttpContext.Items["userId"];
+            var user = await _userRepository.GetById(userId);
+
+            if (user != null && user.Id != userId)
+                return new ApiResult<string> { Msg = "شناسه متعلق به شما نیست" };
+
+            if (user == null)
+                return new ApiResult<string> { Msg = "کاربری وجود ندارد" };
+
+            await _userRepository.UpdateUsername(username, userId);
             return new ApiResult<string> { Success = true };
         }
 
@@ -229,8 +242,8 @@ namespace Application.Services
             {
                 return new ApiResult<string> { Msg = "مقادیر ورودی نباید خالی باشد" };
             }
-
-            await _userRepository.UpdateSheba(sheba, Guid.NewGuid());
+            var userId = (Guid)_http.HttpContext.Items["userId"];
+            await _userRepository.UpdateSheba(sheba, userId);
             return new ApiResult<string> { Success = true };
         }
     }

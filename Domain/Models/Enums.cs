@@ -20,4 +20,10 @@
         SentToBank = 2,
         Canceled = 3,
     }
+
+    public enum AuthorizeType
+    {
+        Level1 = 0,
+        Level2 = 1
+    }
 }

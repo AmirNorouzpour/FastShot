@@ -99,12 +99,17 @@ namespace Infra.Data.Repositories
 
         public async Task UpdateUsername(string username, Guid userId)
         {
-            await _Connection.ExecuteAsync("Update users set username = @username where userId = @userId", new { userId, username });
+            await _Connection.ExecuteAsync("Update users set username = @username where Id = @userId", new { userId, username });
         }
 
         public async Task UpdateSheba(string sheba, Guid userId)
         {
-            await _Connection.ExecuteAsync("Update users set sheba = @sheba where userId = @userId", new { userId, sheba });
+            await _Connection.ExecuteAsync("Update users set sheba = @sheba where Id = @userId", new { userId, sheba });
+        }
+
+        public async Task<User?> GetUserByUserName(string username)
+        {
+            return await _Connection.QueryFirstOrDefaultAsync<User>("select top 1 * from users where username = @username", new { username });
         }
     }
 }

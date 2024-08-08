@@ -2,6 +2,7 @@
 using Application.Services;
 using Domain.Interfaces;
 using Infra.Data.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infra.Ioc
@@ -16,6 +17,7 @@ namespace Infra.Ioc
             service.AddTransient<IRoomRunService, RoomRunService>();
             service.AddTransient<IOtpService, OtpService>();
             service.AddScoped<ITransactionService, TransactionService>();
+            service.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
 
             //Infra.Data Layer

@@ -16,5 +16,6 @@ namespace Domain.Interfaces
         Task<UserExtraFieldsModel> GetUserBalance(Guid userId, long roomRunId);
         Task UpdateUsername(string username, Guid userId);
         Task UpdateSheba(string sheba, Guid userId);
+        Task<User?> GetUserByUserName(string username);
     }
 }
