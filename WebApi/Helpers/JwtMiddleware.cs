@@ -38,7 +38,7 @@ namespace WebApi.Helpers
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.UTF8.GetBytes(_appSettings.Secret);
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                var res = tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
@@ -59,6 +59,6 @@ namespace WebApi.Helpers
             }
         }
 
-        
+
     }
 }

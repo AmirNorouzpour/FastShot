@@ -19,6 +19,7 @@ namespace Infra.Ioc
             service.AddScoped<ITransactionService, TransactionService>();
             service.AddScoped<IFriendService, FriendService>();
             service.AddScoped<IMsgService, MsgService>();
+            service.AddScoped<ITicketService, TicketService>();
 
             service.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -30,6 +31,7 @@ namespace Infra.Ioc
             service.AddScoped<ITransactionRepository, TransactionRepository>();
             service.AddScoped<IFriendRepository, FriendRepository>();
             service.AddScoped<IMsgRepository, MsgRepository>();
+            service.AddScoped<ITicketRepository, TicketRepository>();
         }
     }
 }

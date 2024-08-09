@@ -33,6 +33,17 @@ namespace WebApi.Controllers
             return response;
         }
 
+        [HttpPost("[action]")]
+        [Authorize(Type = AuthorizeType.Level2)]
+        public async Task<IActionResult> TicketPostFile([FromForm] IFormFile file, long ticketId)
+        {
+            using (var sr = new StreamReader(file.OpenReadStream()))
+            {
+                var content = await sr.ReadToEndAsync();
+                return Ok(content);
+            }
+        }
+
         [HttpGet]
         [Authorize(Type = AuthorizeType.Level2)]
         public async Task<ApiResult<List<Ticket>>> Get()
@@ -41,12 +52,12 @@ namespace WebApi.Controllers
             return new ApiResult<List<Ticket>> { Success = true, Data = response };
         }
 
-        [HttpGet]
+        [HttpGet("[action]")]
         [Authorize(Type = AuthorizeType.Level2)]
         public async Task<ApiResult<List<TicketPost>>> GetTicketPosts(long ticketId)
         {
             var response = await _service.GetTicketPosts(ticketId);
-            return new ApiResult<List<Ticket>> { Success = true, Data = response };
+            return new ApiResult<List<TicketPost>> { Success = true, Data = response };
         }
     }
 }
