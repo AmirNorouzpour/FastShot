@@ -37,10 +37,12 @@ namespace WebApi.Controllers
         [Authorize(Type = AuthorizeType.Level2)]
         public async Task<IActionResult> TicketPostFile([FromForm] IFormFile file, long ticketId)
         {
-            using (var sr = new StreamReader(file.OpenReadStream()))
+            using (var ms = new MemoryStream())
             {
-                var content = await sr.ReadToEndAsync();
-                return Ok(content);
+                file.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                var response = await _service.AddTicketPostFile(fileBytes, ticketId, file.FileName);
+                return Ok(response);
             }
         }
 

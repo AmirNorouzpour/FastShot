@@ -22,5 +22,7 @@ namespace Domain.Models
         public byte[]? File { get; set; }
         public string? AdminName { get; set; }
         public string? UserName { get; set; }
+        public int FileLength { get; set; }
+        public string? FileName { get; set; }
     }
 }

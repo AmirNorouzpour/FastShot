@@ -30,5 +30,10 @@ namespace Infra.Data.Repositories
         {
             return await _Connection.QueryAsync<TicketPost>("SELECT * FROM [TicketPosts] Where TicketId = @ticketId", new { ticketId });
         }
+
+        public async Task<Ticket?> GetTicketById(long ticketId)
+        {
+            return await _Connection.QueryFirstOrDefaultAsync<Ticket>("SELECT * FROM [Tickets] Where Id = @ticketId", new { ticketId });
+        }
     }
 }
