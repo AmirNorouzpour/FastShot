@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,43 +7,63 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AdminPanel.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AdminPanel</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - AdminPanel - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+</head>
+<body dir="rtl">
+    <header>
+        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand iran" asp-area="" asp-controller="Home" asp-action="Index">پنل مدیریت فست شات</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>*@
+    </header>
+    <div style="width: 100%; background-color: #191e22;height:100vh" class="box">
+        <div class="nav-bar">
+            <div class="nav-bar-item" style="font-size: 20px; height: 80px; color: white; border-bottom: 1px solid #191e22; padding-top: 20px"><span style="padding-right:10px">فست شات</span></div>
+            <div class="nav-bar-item" style="margin-top:10px"><i class="bi bi-house-door"></i><span style="padding-right:10px">داشبورد</span></div>
+            <div class="nav-bar-item"><i class="bi bi-house-door"></i><span style="padding-right:10px">لیست رقابت ها</span></div>
+            <div class="nav-bar-item"><i class="bi bi-house-door"></i><span style="padding-right:10px">تیکت ها</span></div>
+            <div class="nav-bar-item"><i class="bi bi-house-door"></i><span style="padding-right:10px">تراکنش ها</span></div>
+            <div class="nav-bar-item"><i class="bi bi-house-door"></i><span style="padding-right:10px">کاربران</span></div>
+        </div>
+        <div style=" flex: 10 auto;">
+            <main role="main" class="pb-3">
+                <div style="width: 100%; height: 80px; background-color: #242a30; border-bottom: 1px solid #191e22 "></div>
+                <div style="padding: 20px">
+                    @RenderBody()
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2024 - AdminPanel - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
