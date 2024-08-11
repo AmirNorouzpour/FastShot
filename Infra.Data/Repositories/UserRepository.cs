@@ -123,19 +123,13 @@ namespace Infra.Data.Repositories
 
         private static string CreateFilter(Dictionary<string, object> dictionary)
         {
-            var where = " where ";
-            var usedWhere = false;
+            var where = " where 1=1 ";
             foreach (var item in dictionary)
             {
                 if (item.Key != "page" && item.Key != "rows")
                 {
-                    where += item.Key + "=@" + item.Key;
-                    usedWhere = true;
+                    where += " and " + item.Key + "=@" + item.Key;
                 }
-            }
-            if (!usedWhere)
-            {
-                where = "";
             }
 
             return where;

@@ -14,7 +14,7 @@ namespace AdminPanel.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> Index(int? page = 1, int? rows = 3)
+        public async Task<IActionResult> Index(int? page = 1, int? rows = 20)
         {
             var dic = new Dictionary<string, object>();
             dic.Add("page", page.GetValueOrDefault() - 1);
