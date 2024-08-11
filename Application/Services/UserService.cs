@@ -246,5 +246,10 @@ namespace Application.Services
             await _userRepository.UpdateSheba(sheba, userId);
             return new ApiResult<string> { Success = true };
         }
+
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            return await _userRepository.GetAll();
+        }
     }
 }

@@ -111,5 +111,10 @@ namespace Infra.Data.Repositories
         {
             return await _Connection.QueryFirstOrDefaultAsync<User>("select top 1 * from users where username = @username", new { username });
         }
+
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            return await _Connection.QueryAsync<User>("select * from users");
+        }
     }
 }

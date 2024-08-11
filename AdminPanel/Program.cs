@@ -1,7 +1,10 @@
+using Infra.Ioc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+DependencyContainer.RegisterServices(builder.Services);
 
 var app = builder.Build();
 
