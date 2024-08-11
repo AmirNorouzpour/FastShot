@@ -1,7 +1,6 @@
 using AdminPanel.Models;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Diagnostics;
 
 namespace AdminPanel.Controllers

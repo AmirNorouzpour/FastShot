@@ -32,7 +32,7 @@
 
 .mvc-grid-table > table > thead > tr > th {
     background-clip: padding-box;
-    background-color: #f7f7f7;
+    background-color: #191e22;
     position: relative;
 
 }
@@ -80,11 +80,11 @@
     top: 0;
 }
 
-.mvc-grid-filter:focus,
-.mvc-grid-filter:hover {
-    background: rgb(0 0 0 / 0.06);
-    color: red;
-}
+    .mvc-grid-filter:focus,
+    .mvc-grid-filter:hover {
+        background: #201e49;
+        color: #201e49;
+    }
 
 .mvc-grid-filter::before {
     content: "\0041";
@@ -98,6 +98,7 @@
     background: transparent;
     font-weight: normal;
     transition: none;
+    color: whitesmoke;
 }
 
 .mvc-grid-sort::after {
@@ -116,7 +117,7 @@
     font-weight: bold;
     text-align: left;
     font-size: 0.7em;
-    color: #adacac;
+    color: whitesmoke;
     width: 33%;
     right: 0;
     top: 40%;
@@ -160,6 +161,7 @@
     position: static;
     height: 2em;
     width: 2em;
+    color:whitesmoke
 }
 
 .mvc-grid-excel-mode .filterable {
