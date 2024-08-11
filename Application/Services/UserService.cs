@@ -2,7 +2,6 @@
 using Application.ViewModels;
 using Domain.Interfaces;
 using Domain.Models;
-using Infra.Data.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -247,9 +246,14 @@ namespace Application.Services
             return new ApiResult<string> { Success = true };
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<User>> GetAll(Dictionary<string, object> dictionary)
         {
-            return await _userRepository.GetAll();
+            return await _userRepository.GetAll(dictionary);
+        }
+
+        public async Task<int> Count(Dictionary<string, object> dictionary)
+        {
+            return await _userRepository.Count(dictionary);
         }
     }
 }

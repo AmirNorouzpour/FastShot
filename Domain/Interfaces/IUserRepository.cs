@@ -17,6 +17,7 @@ namespace Domain.Interfaces
         Task UpdateUsername(string username, Guid userId);
         Task UpdateSheba(string sheba, Guid userId);
         Task<User?> GetUserByUserName(string username);
-        Task<IEnumerable<User>> GetAll();
+        Task<IEnumerable<User>> GetAll(Dictionary<string, object> dictionary);
+        Task<int> Count(Dictionary<string, object> dictionary);
     }
 }

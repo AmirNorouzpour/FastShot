@@ -15,12 +15,15 @@
     })
     .Filterable(GridFilterCase.Lower)
     .Using(GridFilterMode.Header)
+    .Using(GridProcessingMode.Manual)
     .Empty("No data found")
     .Pageable(pager =>
     {
-        pager.RowsPerPage = 20;
+        pager.TotalRows = ViewBag.TotalRows;
+        pager.ShowPageSizes = false;
+        pager.RowsPerPage = 3;
     })
-    .Sortable()
+//.Sortable()
 )
     </div>
 </div>
