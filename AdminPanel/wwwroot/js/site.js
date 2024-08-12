@@ -10,7 +10,7 @@ function changeDisplay(element) {
     if (element.id === 'notificationPopup') {
         otherpopup = document.getElementById("profilePopup");
     }
-    if (element.style.display === "none") {
+    if (element.style.display == "none" || element.style.display == '') {
         element.style.display = "block";
         otherpopup.style.display = "none";
     } else {
