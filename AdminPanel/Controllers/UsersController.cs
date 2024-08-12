@@ -5,11 +5,11 @@ using System.Diagnostics;
 
 namespace AdminPanel.Controllers
 {
-    public class HomeController : Controller
+    public class UsersController : Controller
     {
         private readonly IUserService _userService;
 
-        public HomeController(IUserService userService)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
         }
