@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<Domain.Models.User>
 <div class="card" style="width:100%;height:85vh">
-    <div style="padding:20px">
+    <div style="padding:50px">
         @(Html
     .Grid(Model)
     .Build(columns =>
     {
+        columns.Add().RenderedAs((model, row) => row + 1).Titled("#").Css("text-center");
         columns.Add(model => model.Mobile).Titled("Mobile");
         columns.Add(model => model.UserName).Titled("UserName");
         columns.Add(model => model.Credit).Titled("Credit");
@@ -14,12 +15,15 @@
     })
     .Filterable(GridFilterCase.Lower)
     .Using(GridFilterMode.Header)
+    .Using(GridProcessingMode.Manual)
     .Empty("No data found")
     .Pageable(pager =>
     {
-        pager.RowsPerPage = 4;
+        pager.TotalRows = ViewBag.TotalRows;
+        pager.ShowPageSizes = false;
+        pager.RowsPerPage = 20;
     })
-    .Sortable()
+//.Sortable()
 )
     </div>
 </div>

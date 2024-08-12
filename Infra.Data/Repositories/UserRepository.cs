@@ -3,6 +3,7 @@ using Dapper.Contrib.Extensions;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace Infra.Data.Repositories
 {
@@ -112,9 +113,36 @@ namespace Infra.Data.Repositories
             return await _Connection.QueryFirstOrDefaultAsync<User>("select top 1 * from users where username = @username", new { username });
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<User>> GetAll(Dictionary<string, object> dictionary)
         {
-            return await _Connection.QueryAsync<User>("select * from users");
+            var where = CreateFilter(dictionary);
+            var parameters = new DynamicParameters(dictionary);
+
+            return await _Connection.QueryAsync<User>($"select * from users {where} ORDER BY(SELECT NULL) OFFSET @page * @rows ROWS FETCH NEXT @rows ROWS ONLY;", parameters);
+        }
+
+        private static string CreateFilter(Dictionary<string, object> dictionary)
+        {
+            var where = " where 1=1 ";
+            foreach (var item in dictionary)
+            {
+                if (item.Key != "page" && item.Key != "rows")
+                {
+                    where += " and " + item.Key + "=@" + item.Key;
+                }
+            }
+
+            return where;
+        }
+
+        public async Task<int> Count(Dictionary<string, object> dictionary)
+        {
+            var where = CreateFilter(dictionary);
+            var parameters = new DynamicParameters(dictionary);
+
+            var count = await _Connection.ExecuteScalarAsync<int>($"select count(*) from users {where}", parameters);
+            return count;
         }
     }
+
 }
