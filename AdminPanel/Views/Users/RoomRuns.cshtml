@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "لیست رقابت ها";
+}
+
+@model List<Domain.Models.RoomRunFlat>
+<div class="card" style="width:100%;height:85vh">
+    <div style="padding:50px">
+        @(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add().RenderedAs((model, row) => row + 1).Titled("#").Css("text-center");
+        columns.Add(model => model.Id).Titled("Id");
+        columns.Add(model => model.CategoryTitle).Titled("CategoryTitle");
+        columns.Add(model => model.StartTime).Titled("StartTime");
+        columns.Add(model => model.UsersCount).Titled("UsersCount");
+        columns.Add(model => model.RemianCapacity).Titled("RemianCapacity");
+        columns.Add(model => model.Status).Titled("Status");
+        columns.Add(model => model.StartTime).Titled("StartTime").Formatted("{0:t}");
+        columns.Add(model => model.EntryCostWithOff).Titled("EntryCostWithOff").Formatted("{n0}");
+
+    })
+    .Filterable(GridFilterCase.Lower)
+    .Using(GridFilterMode.Header)
+    .Using(GridProcessingMode.Manual)
+    .Empty("No data found")
+    .Pageable(pager =>
+    {
+        pager.TotalRows = ViewBag.TotalRows;
+        pager.ShowPageSizes = false;
+        pager.RowsPerPage = 20;
+    })
+//.Sortable()
+)
+    </div>
+</div>

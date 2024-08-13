@@ -7,11 +7,16 @@ html {
     font-size: 14px;
 }
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
+@media (max-width: 768px) {
+    .nav-bar {
+        display: none
+    }
+
+    .menu-bar {
+        padding-left: 20px
     }
 }
+
 
 .iran {
     font-family: IRANSansWeb;
@@ -38,7 +43,7 @@ html {
 
 .nav-bar-item {
     height: 40px;
-    font: 15px IRANSansWeb;
+    font: 13px IRANSansWeb;
     color: lightgray;
     padding: 5px 10px 5px 10px;
 }
@@ -56,6 +61,7 @@ html {
     border-bottom: 1px solid #191e22;
     padding-left: 50px;
 }
+
 .menu-bar-item {
     flex-direction: column;
     height: 100%;
@@ -64,6 +70,7 @@ html {
     padding: 25px 20px 5px 0px;
     z-index: 1001;
 }
+
     .menu-bar-item:hover {
         cursor: pointer;
         color: white;
@@ -124,7 +131,7 @@ html {
     width: 300px;
     height: 350px;
     border-radius: 5px;
-    display:none;
+    display: none;
 }
 
 .notification-popup-header {

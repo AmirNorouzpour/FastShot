@@ -87,5 +87,15 @@ namespace Application.Services
             }
             return room;
         }
+
+        public async Task<IEnumerable<RoomRunFlat>> GetAll(Dictionary<string, object> parameters)
+        {
+            return await _repository.GetAll(parameters);
+        }
+
+        public async Task<int> Count(Dictionary<string, object> parameters)
+        {
+            return await _repository.Count(parameters);
+        }
     }
 }
