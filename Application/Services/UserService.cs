@@ -246,14 +246,14 @@ namespace Application.Services
             return new ApiResult<string> { Success = true };
         }
 
-        public async Task<IEnumerable<User>> GetAll(Dictionary<string, object> dictionary)
+        public async Task<IEnumerable<User>> GetAll(Dictionary<string, object> parameters)
         {
-            return await _userRepository.GetAll(dictionary);
+            return await _userRepository.GetAll(parameters);
         }
 
-        public async Task<int> Count(Dictionary<string, object> dictionary)
+        public async Task<int> Count(Dictionary<string, object> parameters)
         {
-            return await _userRepository.Count(dictionary);
+            return await _userRepository.Count(parameters);
         }
     }
 }

@@ -3,7 +3,6 @@ using Dapper.Contrib.Extensions;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 
 namespace Infra.Data.Repositories
 {
@@ -113,18 +112,18 @@ namespace Infra.Data.Repositories
             return await _Connection.QueryFirstOrDefaultAsync<User>("select top 1 * from users where username = @username", new { username });
         }
 
-        public async Task<IEnumerable<User>> GetAll(Dictionary<string, object> dictionary)
+        public async Task<IEnumerable<User>> GetAll(Dictionary<string, object> parameters)
         {
-            var where = CreateFilter(dictionary);
-            var parameters = new DynamicParameters(dictionary);
+            var where = CreateFilter(parameters);
+            var parameters1 = new DynamicParameters(parameters);
 
-            return await _Connection.QueryAsync<User>($"select * from users {where} ORDER BY(SELECT NULL) OFFSET @page * @rows ROWS FETCH NEXT @rows ROWS ONLY;", parameters);
+            return await _Connection.QueryAsync<User>($"select * from users {where} ORDER BY(SELECT NULL) OFFSET @page * @rows ROWS FETCH NEXT @rows ROWS ONLY;", parameters1);
         }
 
-        private static string CreateFilter(Dictionary<string, object> dictionary)
+        private static string CreateFilter(Dictionary<string, object> parameters)
         {
             var where = " where 1=1 ";
-            foreach (var item in dictionary)
+            foreach (var item in parameters)
             {
                 if (item.Key != "page" && item.Key != "rows")
                 {
@@ -135,12 +134,12 @@ namespace Infra.Data.Repositories
             return where;
         }
 
-        public async Task<int> Count(Dictionary<string, object> dictionary)
+        public async Task<int> Count(Dictionary<string, object> parameters)
         {
-            var where = CreateFilter(dictionary);
-            var parameters = new DynamicParameters(dictionary);
+            var where = CreateFilter(parameters);
+            var parameters1 = new DynamicParameters(parameters);
 
-            var count = await _Connection.ExecuteScalarAsync<int>($"select count(*) from users {where}", parameters);
+            var count = await _Connection.ExecuteScalarAsync<int>($"select count(*) from users {where}", parameters1);
             return count;
         }
     }

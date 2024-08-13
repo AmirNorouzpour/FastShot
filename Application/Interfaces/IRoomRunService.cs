@@ -11,5 +11,7 @@ namespace Application.Interfaces
         Task<ApiResult<long>> AddUserToRoom(RoomRunUser roomRunUser, bool check);
         Task<ApiResult<string>> AddTeamToRoom(TeamRegisterModel model);
         Task<RoomRunFlat?> GetRoom(long roomId);
+        Task<IEnumerable<RoomRunFlat>> GetAll(Dictionary<string, object> parameters);
+        Task<int> Count(Dictionary<string, object> parameters);
     }
 }

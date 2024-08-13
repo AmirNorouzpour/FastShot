@@ -43,5 +43,36 @@ namespace Infra.Data.Repositories
         {
             return await _Connection.QueryAsync<UserTeamModel>("SELECT [UserId],[Team] FROM [RoomRunUsers] where RoomRunId = @roomRunId", new { roomRunId });
         }
+
+        public async Task<IEnumerable<RoomRunFlat>> GetAll(Dictionary<string, object> parameters)
+        {
+            var where = CreateFilter(parameters);
+            var parameters1 = new DynamicParameters(parameters);
+
+            return await _Connection.QueryAsync<RoomRunFlat>($"select rr.Id, rr.Status, rr.StartTime, rr.EntryCost, rr.EntryCostWithOff, rd.Capacity, rd.TeamsUsersCount,rd.CategoryTitle,rd.[Desc],rd.Title,  (SELECT COUNT(*) FROM RoomRunUsers rru WHERE rru.RoomRunId = rr.Id) UsersCount FROM [RoomRuns] rr join RoomDefs rd on (rr.RoomDefId = rd.Id) {where} ORDER BY(SELECT NULL) OFFSET @page * @rows ROWS FETCH NEXT @rows ROWS ONLY;", parameters1);
+        }
+
+        private static string CreateFilter(Dictionary<string, object> parameters)
+        {
+            var where = " where 1=1 ";
+            foreach (var item in parameters)
+            {
+                if (item.Key != "page" && item.Key != "rows")
+                {
+                    where += " and " + item.Key + "=@" + item.Key;
+                }
+            }
+
+            return where;
+        }
+
+        public async Task<int> Count(Dictionary<string, object> parameters)
+        {
+            var where = CreateFilter(parameters);
+            var parameters1 = new DynamicParameters(parameters);
+
+            var count = await _Connection.ExecuteScalarAsync<int>($"select count(*) from RoomRunUsers {where}", parameters1);
+            return count;
+        }
     }
 }

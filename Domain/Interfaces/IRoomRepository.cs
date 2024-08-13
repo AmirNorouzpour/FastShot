@@ -10,5 +10,7 @@ namespace Domain.Interfaces
         Task<bool> CheckUserInRoom(Guid userId, long roomRunId);
         Task<RoomRunFlat?> GetRoom(long roomId);
         Task<IEnumerable<UserTeamModel>> GetRoomRunUsers(long roomRunId);
+        Task<IEnumerable<RoomRunFlat>> GetAll(Dictionary<string, object> parameters);
+        Task<int> Count(Dictionary<string, object> parameters);
     }
 }
