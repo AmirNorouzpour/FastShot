@@ -88,13 +88,12 @@ html {
     display: none;
 }
 
-.profile-popup-header {
+.popup-header {
     height: 40px;
     font: 14px IRANSansWeb;
     color: black;
     padding-top: 0px;
     color: #534F5A;
-    padding-top: 10px;
     padding-right: 15px;
 }
 
@@ -112,6 +111,8 @@ html {
         background-color: #3a35410a
     }
 
+
+
 .notification-popup {
     position: absolute;
     z-index: 1000;
@@ -126,10 +127,64 @@ html {
     display:none;
 }
 
-.icon-30 {
-    font-size: 30px;
+.notification-popup-header {
+    padding-bottom: 0px;
+    border-bottom: 1px solid #e7e6e8;
 }
+    .notification-popup-header:hover {
+        cursor: pointer;
+        background-color: #3a35410a
+    }
+
+.not-new-bot {
+    background-color: #9155fd;
+    border: 1px solid #9155fd;
+    border-radius: 15px;
+    width: 60%;
+    text-align: center;
+    color: white;
+    font-size:12px
+        
+}
+
+    
+.notification-popup-items {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e7e6e8;
+    height: 64% !important;
+}
+    .notification-popup-items:hover {
+        cursor: pointer;
+        background-color: #3a35410a
+    }
+
+.notif-popup-btn {
+    background-color: #9155fd;
+    border: 1px solid #9155fd;
+    border-radius: 3px;
+    width: 100%;
+    height: 80%;
+    color: white;
+}
+    .notif-popup-btn:hover {
+        background-color: #804BDF;
+        cursor: pointer;
+    }
+    .icon-30 {
+        font-size: 30px;
+    }
 
 .icon-20 {
     font-size: 20px;
+}
+
+.notif-item {
+    height: 70px;
+    font: 12px IRANSansWeb;
+    color: black;
+    padding-top: 0px;
+    color: #534F5A;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-bottom: 1px solid #e7e6e8;
 }
