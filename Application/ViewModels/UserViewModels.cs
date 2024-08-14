@@ -44,4 +44,13 @@ namespace Application.ViewModels
         public string? Sheba { get; set; }
     }
 
+    public class LangModel
+    {
+        public string? ip { get; set; }
+        public string? country { get; set; }
+        public string? Lang { get; set; }
+        public string? city { get; set; }
+        public string? org { get; set; }
+    }
+
 }

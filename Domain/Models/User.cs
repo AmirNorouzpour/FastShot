@@ -26,6 +26,10 @@ namespace Domain.Models
         public int SsoType { get; set; }
         public bool EmailVerified { get; set; }
         public bool MobileVerified { get; set; }
+        public string? Ip { get; set; }
+        public string? Country { get; set; }
+        public string? City { get; set; }
+        public string? Isp { get; set; }
     }
 
     public class UserExtraFieldsModel

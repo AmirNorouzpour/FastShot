@@ -39,6 +39,15 @@ namespace WebApi.Controllers
             return response;
         }
 
+        [HttpGet("info/{userId?}")]
+        [Authorize]
+        public async Task<ApiResult<LangModel>> Info(Guid? userId)
+        {
+            var ip = Request.HttpContext.Connection.RemoteIpAddress;
+            var response = await _userService.GetLang(ip.ToString(), userId);
+            return response;
+        }
+
         [HttpPost("verify")]
         [Authorize]
         public async Task<ApiResult<AuthenticateResponse>> Verify(SsoVerifyModel model)

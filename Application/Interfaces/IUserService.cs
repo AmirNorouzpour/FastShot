@@ -18,5 +18,6 @@ namespace Application.Interfaces
         Task<UserExtraFieldsModel> GetUserBalance(Guid userId, long roomRunId);
         Task<ApiResult<string>> UpdateUsername(string? username);
         Task<ApiResult<string>> UpdateSheba(string? username);
+        Task<ApiResult<LangModel>> GetLang(string ip,Guid? userId);
     }
 }

@@ -5,10 +5,16 @@ using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace Application.Services
 {
@@ -254,6 +260,40 @@ namespace Application.Services
         public async Task<int> Count(Dictionary<string, object> parameters)
         {
             return await _userRepository.Count(parameters);
+        }
+
+        public async Task<ApiResult<LangModel>> GetLang(string ip, Guid? userId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync($"https://api.findip.net/{ip}/?token={"dad02add75244db682479415389f2bde"}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    JObject data = JObject.Parse(jsonString);
+
+                    if (userId.HasValue)
+                    {
+                        var user = await _userRepository.GetById(userId.Value);
+                        if (user == null)
+                            return new ApiResult<LangModel> { Msg = "کاربری یافت نشد" };
+
+                        user.Ip = ip;
+                        user.Country = data["country"]["names"]["en"].Value<string>();
+                        user.City = data["city"]["names"]["en"].Value<string>();
+                        user.Isp = data["traits"]["organization"].Value<string>();
+                        await _userRepository.UpdateUser(user);
+                    }
+
+                    if (data["country"]["names"]["en"].Value<string>() == "Iran")
+                        return new ApiResult<LangModel> { Data = new LangModel { country = data["country"]["names"]["en"].Value<string>(), Lang = "fa-IR", ip = ip } };
+
+                    return new ApiResult<LangModel> { Data = new LangModel { country = data["country"]["names"]["en"].Value<string>(), Lang = "en-US", ip = ip } };
+                }
+                return null;
+
+            }
         }
     }
 }
