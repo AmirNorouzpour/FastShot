@@ -58,7 +58,7 @@
                     <div class="profile-popup">
                         <div id="profilePopup" class="profile-popup-child">
                             <div style="padding-bottom : 15px ; border-bottom: 1px solid #e7e6e8">
-                                <div class="profile-popup-header d-flex flex-row">
+                                <div class="popup-header d-flex flex-row" style="padding-top:10px">
                                     <i class="bi bi-person-circle icon-30"></i>
                                     <span style="padding-right:10px;padding-top:10px;">الهام سوری</span>
                                 </div>
@@ -72,15 +72,57 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="menu-bar-item" onclick="changeDisplay(notificationPopup)"><i class="bi bi-bell"></i></div>
                     <div class="notification-popup">
-                        <div id="notificationPopup" class="notification-popup-child"></div>
+                        <div id="notificationPopup" class="notification-popup-child flex-row ">
+                            @* header *@
+                            <div class="notification-popup-header">
+                                <div class="popup-header d-flex ">
+                                    <div style="padding-right:10px;padding-top:10px; width: 60%">
+                                        <span style="font-size: 1rem;color: rgba(58, 53, 65, 0.87);"> پیام ها</span>
+                                    </div>
+
+                                    <div style="padding-left:5px;padding-top:10px;width: 40% ">
+                                        <div class="not-new-bot"> <span> 8 جدید</span></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="notification-popup-items">
+                                <div class="notif-item d-flex ">
+                                    <div style="padding-right:10px;padding-top:10px; width: 75%;">
+                                        <span style="font-size: 1rem;line-height: 1.5;letter-spacing: 0.15px;color: rgba(58, 53, 65, 0.87);font-weight: 600;"> row1 </span>
+                                    </div>
+
+                                    <div style="padding-left:5px;padding-top:20px;width: 25% ">
+                                        <div style="padding-top:7px; text-align:center">
+                                            <span style="font-size: 0.75rem;line-height: 1.66; letter-spacing: 0.4px; color: rgba(58, 53, 65, 0.38); "> Today </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div style=" padding-top : 4% ;padding-right : 3% ;padding-left : 3%;border-bottom: 1px solid #e7e6e8; width:100% ; height:18%; ">
+                                <div class="notif-popup-btn" style="padding-top:2%;">
+                                    <span style=" padding-right:25%">خواندن همه پیام ها</span>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
                     </div>
 
 
                 </div>
                 <div style="padding: 20px">
-                    @RenderBody()
+                                        @RenderBody()
                 </div>
             </main>
         </div>
@@ -99,6 +141,6 @@
         document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));
     </script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+                                        @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
