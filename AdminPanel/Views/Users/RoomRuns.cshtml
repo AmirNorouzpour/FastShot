@@ -12,12 +12,11 @@
         columns.Add().RenderedAs((model, row) => row + 1).Titled("#").Css("text-center");
         columns.Add(model => model.Id).Titled("Id");
         columns.Add(model => model.CategoryTitle).Titled("CategoryTitle");
-        columns.Add(model => model.StartTime).Titled("StartTime");
         columns.Add(model => model.UsersCount).Titled("UsersCount");
         columns.Add(model => model.RemianCapacity).Titled("RemianCapacity");
         columns.Add(model => model.Status).Titled("Status");
-        columns.Add(model => model.StartTime).Titled("StartTime").Formatted("{0:t}");
-        columns.Add(model => model.EntryCostWithOff).Titled("EntryCostWithOff").Formatted("{n0}");
+        columns.Add(model => model.StartTimeLocal).Titled("StartTime").Formatted("{0:yyyy-MM-dd HH:mm}");
+        columns.Add(model => model.EntryCostWithOff).Titled("EntryCostWithOff").Formatted("{0:n0}");
 
     })
     .Filterable(GridFilterCase.Lower)

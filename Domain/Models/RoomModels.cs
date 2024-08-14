@@ -1,4 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
+using System.Globalization;
 
 namespace Domain.Models
 {
@@ -37,7 +38,7 @@ namespace Domain.Models
         public DateTime CreateDateTime { get; set; }
         public DateTime UpdateDateTime { get; set; }
         public Guid CreatorId { get; set; }
-        public int Status { get; set; }
+        public RoomRunStatus Status { get; set; }
         public decimal EntryCost { get; set; }
         public decimal EntryCostWithOff { get; set; }
         public long Roomer { get; set; }
@@ -85,7 +86,8 @@ namespace Domain.Models
     {
         public long Id { get; set; }
         public DateTime StartTime { get; set; }
-        public int Status { get; set; }
+        public string StartTimeLocal { get { return StartTime.ToLocalTime().ToString("yyyy/MM/dd-HH:mm", new CultureInfo("fa-IR")); } }
+        public RoomRunStatus Status { get; set; }
         public int Category { get; set; }
         public string CategoryTitle { get; set; }
         public int Capacity { get; set; }
@@ -97,7 +99,7 @@ namespace Domain.Models
         public List<UserTeamModel> Users { get; set; } = new List<UserTeamModel>();
         public int RemianCapacity { get { return Capacity - UsersCount; } }
     }
-     
+
     public class UserTeamModel
     {
         public Guid UserId { get; set; }

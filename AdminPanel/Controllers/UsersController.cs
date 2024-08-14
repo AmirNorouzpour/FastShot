@@ -31,8 +31,7 @@ namespace AdminPanel.Controllers
             var list = await _roomRunService.GetAll(parameters);
             ViewBag.TotalRows = await _roomRunService.Count(parameters);
 
-            var list2 = new List<RoomRunFlat> { new RoomRunFlat { Text = "asdsadsad" } };
-            return View(list2.ToList());
+            return View(list.ToList());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

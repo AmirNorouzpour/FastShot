@@ -29,7 +29,7 @@
 
     public enum TicketStatus
     {
-        Register = 0,
+        Registered = 0,
         Awnsered = 1,
         UserAwnserd = 2,
         Closed = 3
@@ -40,5 +40,14 @@
         Warning = 0,
         Info = 1,
         Critical = 2
+    }
+
+    public enum RoomRunStatus
+    {
+        Registered = 0,
+        InProgress = 1,
+        Finished = 2,
+        Canceled = 3,
+        Moved = 4
     }
 }
